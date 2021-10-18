@@ -2,7 +2,7 @@
 
 An application designed for spliting invoices and managing bills
 
-#### functions
+#### basic functions
 
 - sign up & sign in
 - create bills (set amount, upload receipt, add debtors)
