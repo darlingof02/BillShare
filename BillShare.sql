@@ -1,4 +1,10 @@
-create user (
+create database if not exists BillShare;
+
+use BillShare;
+
+
+
+create table user (
     uid             Integer,
     username        varchar(30) not null,
     password        varchar(20) not null,
@@ -7,7 +13,7 @@ create user (
     primary key (uid)
 );
 
-create bill (
+create table bill (
     bid             Integer,
     amount          Integer not null,
     receipt         text,
@@ -16,7 +22,7 @@ create bill (
     primary key (bid)
 );
 
-create own (
+create table own (
     uid             Integer,
     bid             Integer,
     time            timestamp,
@@ -25,7 +31,7 @@ create own (
     foreign key (bid) references bill(bid) on delete cascade
 );
 
-create indebt (
+create table indebt (
     uid             Integer,
     bid             Integer,
     time            Integer not null,
@@ -34,3 +40,9 @@ create indebt (
     foreign key (uid) references user(uid) on delete cascade,
     foreign key (bid) references bill(bid) on delete cascade
 );
+
+create user 'admin'@'localhost' identified by '123456';
+
+grant all privileges on billshare.* to 'admin'@'localhost';
+
+flush privileges;
