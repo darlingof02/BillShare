@@ -3,4 +3,3 @@ spring:
     url: jdbc:mysql://localhost/billshare
     username: admin
     password: 123456
-    driver-class-name:
