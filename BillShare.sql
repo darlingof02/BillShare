@@ -6,10 +6,13 @@ use BillShare;
 
 create table user (
     uid             Integer,
-    username        varchar(30) not null,
+    lastname        varchar(30) not null,
+    firstname       varchar(30) not null,
+    nickname        varchar(30),
     password        varchar(20) not null,
     email           varchar(20) not null,
     avatar          text,
+    tel             long,
     primary key (uid)
 );
 
