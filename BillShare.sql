@@ -9,7 +9,7 @@ create table user (
     lastname        varchar(30) not null,
     firstname       varchar(30) not null,
     nickname        varchar(30),
-    password        varchar(20) not null,
+    password        text not null,
     email           varchar(20) not null,
     avatar          text,
     tel             long,

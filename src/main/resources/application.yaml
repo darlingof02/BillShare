@@ -21,21 +21,21 @@ spring:
     hibernate:
       ddl-auto: update
 
-#jwt:
-#  signing:
-#    key:
-#      secret: mySecret
-#  get:
-#    token:
-#      uri: /authenticate
-#  refresh:
-#    token:
-#      uri: /refresh
-#  http:
-#    request:
-#      header: Authorization
-#  token:
-#    expiration:
-#      in:
-#        seconds: 604800
+jwt:
+  signing:
+    key:
+      secret: mySecret
+  get:
+    token:
+      uri: /authenticate
+  refresh:
+    token:
+      uri: /refresh
+  http:
+    request:
+      header: Authorization
+  token:
+    expiration:
+      in:
+        seconds: 604800
 
