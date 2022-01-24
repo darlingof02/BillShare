@@ -7,7 +7,7 @@ import com.yyds.billshare.Repository.UserJpaRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 public class SignUpController {
@@ -20,8 +20,10 @@ public class SignUpController {
 
     @PostMapping("/create_user")
     private User createUser(@RequestBody User user){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
+        System.out.println(user);
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        user.setPassword(encoder.encode(user.getPassword()));
+        System.out.println(user);
         return userJpaRepository.save(user);
     }
 

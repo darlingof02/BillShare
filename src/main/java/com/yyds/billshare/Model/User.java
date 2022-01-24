@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "user_name" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
@@ -23,5 +23,7 @@ public class User {
     private String avatar;
     private String password;
     private Long tel;
+
+
 
 }
