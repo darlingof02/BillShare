@@ -6,9 +6,10 @@ logging:
 
 spring:
   datasource:
-    url: jdbc:mysql://${RDS_HOSTNAME:localhost}:${RDS_PORT:3306}/${RDS_DB_NAME:Users_DB}
-    username: ${RDS_USERNAME:sign-up-user}
-    password: ${RDS_PASSWORD:284veneto}
+    url: jdbc:mysql://${RDS_HOSTNAME:localhost}:${RDS_PORT:3306}/${RDS_DB_NAME:billshare}
+    username: ${RDS_USERNAME:admin}
+    password: ${RDS_PASSWORD:123456}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     properties:
@@ -16,22 +17,25 @@ spring:
         dialect=org:
           hibernate:
             dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
-jwt:
-  signing:
-    key:
-      secret: mySecret
-  get:
-    token:
-      uri: /authenticate
-  refresh:
-    token:
-      uri: /refresh
-  http:
-    request:
-      header: Authorization
-  token:
-    expiration:
-      in:
-        seconds: 604800
+#jwt:
+#  signing:
+#    key:
+#      secret: mySecret
+#  get:
+#    token:
+#      uri: /authenticate
+#  refresh:
+#    token:
+#      uri: /refresh
+#  http:
+#    request:
+#      header: Authorization
+#  token:
+#    expiration:
+#      in:
+#        seconds: 604800
 

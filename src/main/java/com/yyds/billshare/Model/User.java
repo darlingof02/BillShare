@@ -8,16 +8,21 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "user_name" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue
-    private Long user_id;
+    private Integer uid;
 
-    @Column(name = "user_name")
-    private String username;
+    private String lastname;
+    private String firstname;
+    private String nickname;
+    private String email;
+    private String avatar;
     private String password;
+    private Long tel;
+
 
 }
