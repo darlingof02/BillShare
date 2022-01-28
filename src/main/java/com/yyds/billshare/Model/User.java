@@ -16,14 +16,13 @@ public class User {
     @GeneratedValue
     private Integer uid;
 
-    private String lastname;
     private String firstname;
+    private String lastname;
+
     private String nickname;
     private String email;
     private String avatar;
     private String password;
     private Long tel;
-
-
 
 }

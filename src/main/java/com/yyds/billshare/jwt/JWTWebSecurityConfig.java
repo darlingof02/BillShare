@@ -80,12 +80,15 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
                         authenticationPath
                 )
                 .antMatchers(HttpMethod.POST,"/create_user")
+                .antMatchers(HttpMethod.GET,"/test/**")
+                .antMatchers(HttpMethod.GET,"/favicon.ico")
+                .antMatchers(HttpMethod.POST,"/test/**")
                 .antMatchers(HttpMethod.OPTIONS, "/**")
                 .and()
                 .ignoring()
                 .antMatchers(
                         HttpMethod.GET,
-                        "/" //Other Stuff You want to Ignore
+                        "/"
                 )
                 .and()
                 .ignoring()

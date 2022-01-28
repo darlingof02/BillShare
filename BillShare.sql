@@ -3,6 +3,11 @@ create database if not exists BillShare;
 use BillShare;
 
 
+DROP TABLE indebt;
+DROP TABLE own;
+DROP TABLE bill;
+
+DROP TABLE user;
 
 create table user (
     uid             Integer,
@@ -10,7 +15,7 @@ create table user (
     firstname       varchar(30) not null,
     nickname        varchar(30),
     password        text not null,
-    email           varchar(20) not null,
+    email           varchar(30) not null,
     avatar          text,
     tel             long,
     primary key (uid)
