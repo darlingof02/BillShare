@@ -1,6 +1,7 @@
 package com.yyds.billshare;
 
 import com.yyds.billshare.Model.Bill;
+import com.yyds.billshare.Model.Debtor;
 import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.BillRepository;
 import com.yyds.billshare.Repository.DebtorRepository;
@@ -12,8 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.persistence.Persistence;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @DataJpaTest
@@ -25,6 +26,8 @@ public class testshit {
     private UserRepository userRepository;
     @Autowired
     private BillRepository billRepository;
+    @Autowired
+    private DebtorRepository debtorRepository;
     @Test
     public void testBill(){
         // create 3 bills and 1 user
@@ -61,6 +64,23 @@ public class testshit {
         // create 1 bills and 1 user
         // create 3 debtors
         // 2. let bills add user
+        Date date = new Date();
+        User u1 = new User(null,"Yuning","Xie","4_Celery","test@gmail.com",null,
+                "122345",9499927197L);
+        User u2 = new User(null,"Yizhuang","Peng","darlingof2","peng@gmail.com",null,
+                "122345",9499927197L);
+        Bill b1 = new Bill(null,u1,10,"shit",0,null,null,"shit","pay now",null);
+        Debtor d1 = new Debtor(u2,b1,0, new Timestamp(date.getTime()),null,10);
+        Debtor d2 = new Debtor(u1,b1,0,null,null,20);
+
+        entityManager.persist(u1);
+        entityManager.persist(u2);
+        entityManager.persist(b1);
+        entityManager.persist(d1);
+        entityManager.persist(d2);
+        List<Debtor> ds = debtorRepository.findByAmount(20);
+        System.out.println(ds);
+
 
     }
 }

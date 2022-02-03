@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Getter
@@ -26,6 +27,14 @@ public class Debtor {
     @JoinColumn(name = "bid",referencedColumnName = "bid",nullable = false)
     private Bill bill;
 
+    private int status;
+    @Column(name = "accept_time")
+    private Timestamp acceptTime;
+
+    @Column(name = "pay_time")
+    private Timestamp payTime;
+
+    private int amount;
 
     @Override
     public boolean equals(Object o) {
