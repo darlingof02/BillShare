@@ -23,17 +23,21 @@ create table user (
 
 create table bill (
     bid             Integer,
+    oid             Integer not null,
     amount          Integer not null,
     receipt         text,
-    status          Integer,
-    type            Integer,
-    primary key (bid)
+    status          Integer not null,
+    create_time     timestamp,
+    finish_time     timestamp,
+    type            varchar(30),
+    comment         text,
+    primary key (bid),
+    foreign key (oid) references user(uid) on delete cascade
 );
 
 create table own (
     uid             Integer,
     bid             Integer,
-    time            timestamp,
     primary key(bid),
     foreign key (uid) references user(uid) on delete cascade,
     foreign key (bid) references bill(bid) on delete cascade
@@ -42,7 +46,9 @@ create table own (
 create table indebt (
     uid             Integer,
     bid             Integer,
-    time            Integer not null,
+    status          Integer not null,
+    accept_time     timestamp,
+    pay_time        timestamp,
     amount          Integer not null,
     primary key(uid, bid),
     foreign key (uid) references user(uid) on delete cascade,

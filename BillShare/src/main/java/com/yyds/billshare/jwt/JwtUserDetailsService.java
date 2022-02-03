@@ -1,7 +1,7 @@
 package com.yyds.billshare.jwt;
 
 import com.yyds.billshare.Model.User;
-import com.yyds.billshare.Repository.UserJpaRepository;
+import com.yyds.billshare.Repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,9 +12,9 @@ import java.util.List;
 @Service
 public class JwtUserDetailsService  implements UserDetailsService {
 
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userJpaRepository;
 
-    public JwtUserDetailsService(UserJpaRepository userJpaRepository) {
+    public JwtUserDetailsService(UserRepository userJpaRepository) {
         this.userJpaRepository = userJpaRepository;
     }
 

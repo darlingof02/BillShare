@@ -3,7 +3,7 @@ import React from 'react';
 import { useFormik, Field, Form } from 'formik';
 import SignUpService from '../api/SignUpService';
 import TestFileUpComponent from './TestFileUp'
-import { API_URL } from '../constant';
+import { API_URL } from '../api/constant';
 const SignupForm = () => {
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
@@ -60,7 +60,7 @@ const SignupForm = () => {
         <fieldset>
             <input type="file" name="avatar" accept="image/png, image/jpeg"></input>
         </fieldset>
-        <button type="submit">Submit</button>
+        <button type="submit" className='btn-success'>Submit</button>
     </form>
     
   );

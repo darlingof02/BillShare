@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 import SignUpComponent from "./SignUpComponent";
 import axios from "axios"
-import {API_URL} from "../constant"
+import {API_URL} from "../api/constant"
 import {Field, Form} from "formik"
 class TestFileUpComponent extends Component {
 

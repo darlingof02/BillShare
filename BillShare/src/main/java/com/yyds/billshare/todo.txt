@@ -1,0 +1,48 @@
+
+
+转账
+A 点击添加账单，出来一个表单
+填写信息（表单）
+表单中内容：
+    总金额+自动显示每个人金额（前端实现）
+    receipt
+    comment
+    添加欠款人按钮
+
+
+点击提交，发生的动作：
+    数据库检索收款人
+    每个人对应的bill创建，status设置为0
+    邮件提醒被收款人
+    被收件人页面收到传来的信息
+        确认，bill的status设置为1
+        拒绝，bill的status设置为-1
+    不管那个操作，收件人都会收到消息/共享数据，也就是说，欠钱双方都能随时看到相关的账单记录
+    数据库发生的操作：
+        1. 插入bill数据，bid + amount/receipt/status/type
+        2. 插入own数据，uid/bid/time
+        3. 插入多条indebt数据，uid,bid,time,算好的amount
+
+展示所有的欠款
+欠钱的双方，共享数据库中的相关信息
+
+
+数据库设计问题
+1. status不应该是bill的属性，应该是对应到欠账人与被欠账人的属性
+2. 是否设定为一个bill只能有一个owner
+3. indebt和own两个可以合并，因为time与amount产生冗余
+4. 如何记录status的变化时刻？
+5. own、indebt中的time什么意思
+
+
+
+
+
+发送给B
+
+
+
+
+
+
+

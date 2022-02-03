@@ -31,6 +31,7 @@ class UserInfo{
 
 @Slf4j
 @Controller
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true", allowedHeaders = "*")
 public class TestAnythingController {
 
     @GetMapping("/test/string")

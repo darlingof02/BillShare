@@ -3,7 +3,7 @@ package com.yyds.billshare.Controller;
 
 
 import com.yyds.billshare.Model.User;
-import com.yyds.billshare.Repository.UserJpaRepository;
+import com.yyds.billshare.Repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,10 +12,11 @@ import java.io.File;
 import java.io.IOException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true", allowedHeaders = "*")
 public class SignUpController {
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userJpaRepository;
 
-    public SignUpController(UserJpaRepository userJpaRepository) {
+    public SignUpController(UserRepository userJpaRepository) {
         this.userJpaRepository = userJpaRepository;
     }
 
