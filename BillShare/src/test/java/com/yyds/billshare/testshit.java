@@ -79,6 +79,7 @@ public class testshit {
         entityManager.persist(d1);
         entityManager.persist(d2);
         List<Debtor> ds = debtorRepository.findByAmount(20);
+        System.out.println("++++");
         System.out.println(ds);
 
 
