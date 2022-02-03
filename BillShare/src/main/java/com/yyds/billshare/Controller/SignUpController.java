@@ -21,7 +21,7 @@ public class SignUpController {
     }
 
     @PostMapping("/create_user")
-    private User createUser(@RequestParam(value = "firstname") String firstname,
+    private User register(@RequestParam(value = "firstname") String firstname,
                             @RequestParam(value = "lastname") String lastname,
                             @RequestParam(value = "nickname") String nickname,
                             @RequestParam(value = "password") String password,

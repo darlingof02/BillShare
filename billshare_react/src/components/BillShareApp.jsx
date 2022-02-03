@@ -21,8 +21,6 @@ class BillShareApp extends Component {
                         <Route path="/login" element={<LoginComponent/>}/>
                         <Route path="/welcome/:name" element={<RequireAuth><WelcomeComponent/></RequireAuth>}/>
 
-
-
                         <Route path="/test" element={<TestFileUpComponent/>}/>
                     </Routes>
                     <FooterComponent/>
