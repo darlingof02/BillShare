@@ -34,7 +34,7 @@ public class Bill {
     private String type;
     private String comment;
 
-    @OneToMany(targetEntity = Debtor.class)
+    @OneToMany(mappedBy = "bill")
     private Set<Debtor> debtors = new HashSet<>();
 
 }
