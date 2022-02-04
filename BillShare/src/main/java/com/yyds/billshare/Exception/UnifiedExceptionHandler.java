@@ -17,7 +17,6 @@ public class UnifiedExceptionHandler {
             case 100:
                 response = exception.getMessage();
                 break;
-
         }
         return response;
     }

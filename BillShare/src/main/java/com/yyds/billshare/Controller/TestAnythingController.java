@@ -28,6 +28,12 @@ class UserInfo{
     MultipartFile avatar;
 }
 
+@Data
+class BillCreateForm{
+    private int amount;
+    private String comment;
+    private MultipartFile receipt;
+}
 
 @Slf4j
 @Controller
@@ -72,5 +78,18 @@ public class TestAnythingController {
         return "shit, success!";
     }
 
+    @PostMapping("/test/create_bill")
+    @ResponseBody
+    public String createBill(
+//            MultipartFile receipt,
+            BillCreateForm form
+    ){
+        //conclusion 带有multipart的，两个参数注释可以不写
+        log.info(form.toString());
+        if(form.getReceipt().getSize()==0)
+            log.info("wocaonima");
+
+        return "shit";
+    }
 
 }

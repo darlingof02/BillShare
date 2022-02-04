@@ -7,6 +7,7 @@ import HeaderComponent from "./HeaderComponent";
 import LoginComponent from './LoginComponent';
 import RequireAuth from "./RequireAuth";
 import WelcomeComponent from './WelcomeComponent';
+import CreateBillComponent from './CreateBillComponent'
 class BillShareApp extends Component {
     render(){
         return (
@@ -19,7 +20,9 @@ class BillShareApp extends Component {
                         <Route path="/" element={<LoginComponent/>}/>
                         <Route path="/signup" element={<SignUpComponent/>}/>
                         <Route path="/login" element={<LoginComponent/>}/>
+
                         <Route path="/welcome/:name" element={<RequireAuth><WelcomeComponent/></RequireAuth>}/>
+                        <Route path="/newbill" element={<RequireAuth><CreateBillComponent/></RequireAuth>}/>
 
                         <Route path="/test" element={<TestFileUpComponent/>}/>
                     </Routes>

@@ -2,12 +2,11 @@ create database if not exists BillShare;
 
 use BillShare;
 
-
 DROP TABLE indebt;
 DROP TABLE own;
 DROP TABLE bill;
-
 DROP TABLE user;
+
 
 create table user (
     uid             Integer,

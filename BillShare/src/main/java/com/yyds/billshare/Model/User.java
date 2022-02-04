@@ -1,20 +1,40 @@
 package com.yyds.billshare.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import com.yyds.billshare.Model.Form.UserSignupForm;
+import lombok.*;
+import org.hibernate.Hibernate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+    @Id
+    @GeneratedValue
+    private Integer uid;
+
+    private String firstname;
+    private String lastname;
+    private String nickname;
+    private String email;
+
+    private String password;
+    private Long tel;
+    private String avatar;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Bill> bills = new ArrayList<>();
+
     public User(Integer uid, String firstname, String lastname, String nickname, String email, String avatar, String password, Long tel) {
         this.uid = uid;
         this.firstname = firstname;
@@ -25,21 +45,28 @@ public class User {
         this.password = password;
         this.tel = tel;
     }
+    public User(UserSignupForm userInfo){
+        this.firstname = userInfo.getFirstname();
+        this.lastname = userInfo.getLastname();
+        this.nickname = userInfo.getNickname();
+        this.email = userInfo.getEmail();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(userInfo.getPassword());
 
-    @Id
-    @GeneratedValue
-    private Integer uid;
+        this.tel = userInfo.getTel();
+        this.avatar = userInfo.getAvatar().getOriginalFilename();
+    }
 
-    private String firstname;
-    private String lastname;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return uid != null && Objects.equals(uid, user.uid);
+    }
 
-    private String nickname;
-    private String email;
-    private String avatar;
-    private String password;
-    private Long tel;
-
-    @OneToMany(mappedBy = "owner")
-    private List<Bill> bills = new ArrayList<>();
-
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

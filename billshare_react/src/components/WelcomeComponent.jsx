@@ -17,14 +17,14 @@ class WelcomeComponent extends Component{
                 <h1>Welcome!</h1>
                 <div className="container">
                     Welcome! {name}, 
-                    you can manage your TODOs <Link to = "/todos">here</Link>
+                    you can add new bills here <Link to = "/newbill">here</Link>
                 </div>
                 <div className="container">
                     Click <button onClick={this.retrieveWelcomeMessage} className="btn btn">here</button> to get a costomized welcome message 
                 </div>
                 <div className="container">
                     {this.state.welcomeMessage}
-                </div>                
+                </div>
             </div> // Why? Where‘s name？
         )
     }

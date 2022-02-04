@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -30,6 +31,8 @@ public class testshit {
     private DebtorRepository debtorRepository;
     @Test
     public void testBill(){
+        // conclusion: better save many-side than save one-side to maintain the relation
+
         // create 3 bills and 1 user
         // 1. let user add 3 bills
         // 2. let bills add user
@@ -37,25 +40,33 @@ public class testshit {
                 "122345",9499927197L);
         System.out.println(u1.getBills().size());
 
-        Bill b1 = new Bill(null,u1,10,"shit",0,null,null,"shit","pay now",null);
-        Bill b2 = new Bill(null,u1,20,"shit",1,null,null,"shit","pay now",null);
-        Bill b3 = new Bill(null,u1,30,"shit",3,null,null,"shit","pay now",null);
+        Bill b1 = new Bill(null,null,10,"shit",0,null,null,"shit","pay now");
+        Bill b2 = new Bill(null,null,20,"shit",1,null,null,"shit","pay now");
+        Bill b3 = new Bill(null,null,30,"shit",3,null,null,"shit","pay now");
         System.out.println(b1.getOwner());
-        b1.setOwner(u1);
-        b1.setOwner(u1);
-        b1.setOwner(u1);
-        System.out.println(u1.getBills().size());
+        u1.getBills().add(b1);
+        u1.getBills().add(b2);
+        u1.getBills().add(b3);
         entityManager.persist(u1);
-        entityManager.persist(b1);
-        entityManager.persist(b2);
-        entityManager.persist(b3);
+
+        System.out.println(u1.getBills().size());
+
+
+//        b1.setOwner(u1);
+//        b1.setOwner(u1);
+//        b1.setOwner(u1);
+//        entityManager.persist(b1);
+//        entityManager.persist(b2);
+//        entityManager.persist(b3);
 
         List<User> users = userRepository.findByEmail("xieyn12345@gmail.com");
         List<Bill> bills = billRepository.findByAmount(10);
+        List<Bill> allbills = billRepository.findAll();
 
         System.out.println("++++++++++");
         System.out.println(users);
         System.out.println(bills);
+        System.out.println(allbills);
 
     }
 
@@ -81,6 +92,13 @@ public class testshit {
         List<Debtor> ds = debtorRepository.findByAmount(20);
         System.out.println("++++");
         System.out.println(ds);
+
+
+    }
+
+
+    @Test
+    public void testCreateBill(){
 
 
     }

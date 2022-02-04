@@ -18,35 +18,26 @@ import java.util.Date;
 @SpringBootApplication
 public class BillshareApplication {
 
-    final UserRepository userRepository;
-    final BillRepository billRepository;
-
-    public BillshareApplication(BillRepository billRepository, UserRepository userRepository) {
-        this.billRepository = billRepository;
-        this.userRepository = userRepository;
-    }
-
-
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(BillshareApplication.class, args);
 //        BillshareApplication billshareApplication = new BillshareApplication();
 //        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 //        context.register(UserRepository.class);
 
-        Date date = new Date();
-        UserRepository userRepository = run.getBean("userRepository",UserRepository.class);
-        BillRepository billRepository = run.getBean("billRepository",BillRepository.class);
-        User u1 = new User(null,"Yuning","Xie","4_Celery","xieyn1234566@gmail.com",null,
-                "122345",9499927197L);
-
-        Bill b1 = new Bill(null,u1,10,"shit",0, null,null,"shit","pay now",null);
-        Bill b2 = new Bill(null,u1,20,"shit",1, null,null,"shit","pay now",null);
-        Bill b3 = new Bill(null,u1,30,"shit",3, null, new Timestamp(date.getTime()),"shit","pay now",null);
-
-        userRepository.save(u1);
-        billRepository.save(b1);
-        billRepository.save(b2);
-        billRepository.save(b3);
+//        Date date = new Date();
+//        UserRepository userRepository = run.getBean("userRepository",UserRepository.class);
+//        BillRepository billRepository = run.getBean("billRepository",BillRepository.class);
+//        User u1 = new User(null,"Yuning","Xie","4_Celery","xieyn1234566@gmail.com",null,
+//                "122345",9499927197L);
+//
+//        Bill b1 = new Bill(null,u1,10,"shit",0, null,null,"shit","pay now",null);
+//        Bill b2 = new Bill(null,u1,20,"shit",1, null,null,"shit","pay now",null);
+//        Bill b3 = new Bill(null,u1,30,"shit",3, null, new Timestamp(date.getTime()),"shit","pay now",null);
+//
+//        userRepository.save(u1);
+//        billRepository.save(b1);
+//        billRepository.save(b2);
+//        billRepository.save(b3);
     }
 
 
