@@ -8,9 +8,14 @@
         <version>2.6.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.learn.rest.webservices</groupId>
-    <artifactId>restful-web-services</artifactId>
+    <groupId>com.yyds.billshare</groupId>
+    <artifactId>billshare</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+<!--    <groupId>com.learn.rest.webservices</groupId>-->
+<!--    <artifactId>restful-web-services</artifactId>-->
+<!--    <version>0.0.1-SNAPSHOT</version>-->
+
     <name>restful-web-services</name>
     <description>learn how to build a restful web services!</description>
     <properties>
@@ -34,6 +39,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

@@ -4,9 +4,11 @@ import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,8 +25,10 @@ public class SignUpController {
     }
 
     @PostMapping("/create_user")
-    private String register (UserSignupForm form) throws IOException {
-        // TODO： 添加form表单验证功能
+    private String register (@Valid UserSignupForm form, BindingResult bindingResult) throws IOException {
+        if(bindingResult.hasErrors()){
+            return bindingResult.getAllErrors().toString();
+        }
 
         if(!form.getAvatar().isEmpty())
             this.saveAvatar(form.getAvatar());

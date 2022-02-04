@@ -13,7 +13,7 @@ create table user (
     lastname        varchar(30) not null,
     firstname       varchar(30) not null,
     nickname        varchar(30),
-    password        text not null,
+    password        varchar(60) not null,
     email           varchar(30) not null,
     avatar          text,
     tel             long,
