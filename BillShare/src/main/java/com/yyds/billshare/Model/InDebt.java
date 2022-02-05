@@ -1,12 +1,10 @@
 package com.yyds.billshare.Model;
 
 
-import com.yyds.billshare.Model.Form.DebtorInfo;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
@@ -18,10 +16,10 @@ import java.util.Objects;
 @IdClass(DebtorPK.class)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Debtor {
+public class InDebt {
     @Id
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "uid", referencedColumnName = "uid", nullable = false)
+    @JoinColumn(name = "did", referencedColumnName = "uid", nullable = false)
     private User debtor;
 
     @Id
@@ -42,9 +40,9 @@ public class Debtor {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Debtor debtor1 = (Debtor) o;
-        return debtor != null && Objects.equals(debtor, debtor1.debtor)
-                && bill != null && Objects.equals(bill, debtor1.bill);
+        InDebt inDebt1 = (InDebt) o;
+        return debtor != null && Objects.equals(debtor, inDebt1.debtor)
+                && bill != null && Objects.equals(bill, inDebt1.bill);
     }
 
     @Override

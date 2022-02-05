@@ -42,7 +42,7 @@ public class Bill {
 
     @OneToMany(mappedBy = "bill")
     @ToString.Exclude
-    private Set<Debtor> debtors = new HashSet<>();
+    private Set<InDebt> inDebts = new HashSet<>();
 
 
     public Bill(Integer bid, User owner, int amount, String receipt, int status, Timestamp creatTime, Timestamp finishTime, String type, String comment) {

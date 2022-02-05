@@ -35,6 +35,10 @@ public class User {
     @ToString.Exclude
     private List<Bill> bills = new ArrayList<>();
 
+    @OneToMany(mappedBy = "debtor", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<InDebt> inDebts = new ArrayList<>();
+
     public User(UserSignupForm userInfo){
         this.firstname = userInfo.getFirstname();
         this.lastname = userInfo.getLastname();

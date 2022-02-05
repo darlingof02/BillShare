@@ -43,14 +43,14 @@ create table own (
 );
 
 create table indebt (
-    uid             Integer,
+    did             Integer,
     bid             Integer,
     status          Integer not null,
     accept_time     timestamp,
     pay_time        timestamp,
     amount          Integer not null,
-    primary key(uid, bid),
-    foreign key (uid) references user(uid) on delete cascade,
+    primary key(did, bid),
+    foreign key (did) references user(uid) on delete cascade,
     foreign key (bid) references bill(bid) on delete cascade
 );
 
