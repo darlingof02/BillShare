@@ -2,7 +2,7 @@
 logging:
   level:
     org:
-      springframework: info
+      springframework: debug
 
 spring:
   datasource:
@@ -20,6 +20,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+#  output:
+#    ansi:
+#      enabled: ALWAYS
 
 jwt:
   signing:
@@ -38,4 +41,6 @@ jwt:
     expiration:
       in:
         seconds: 604800
+
+
 

@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class TestShit {
         // create 3 bills and 1 user
         // 1. let user add 3 bills
         // 2. let bills add user
-        User u1 = new User(null,"Yuning","Xie","4_Celery","xieyn12345@gmail.com","122345", 9499927197L,null,null);
+        User u1 = new User(null,"Yuning","Xie","4_Celery","xieyn12345@gmail.com","122345", 9499927197L,null,new ArrayList<>());
         System.out.println(u1.getBills().size());
 
         Bill b1 = new Bill(null,null,10,"shit",0,null,null,"shit","pay now");

@@ -33,6 +33,21 @@ class CreateBillComponent extends Component {
                     <input name = "email" type="email" placeholder = "email"></input>
                 </fieldset>
 
+                <fieldset>
+                    <label>email:</label>
+                    <input name = "email" type="email" placeholder = "email"></input>
+                </fieldset>
+
+                <fieldset>
+                    <label>type:</label>
+                    <input name = "type" type="text" placeholder = "type"></input>
+                </fieldset>
+
+                <fieldset>
+                    <label>comment:</label>
+                    <input name = "comment" type="text" placeholder = "comment"></input>
+                </fieldset>
+
         
                 <fieldset>
                     <label>upload receipt:</label>

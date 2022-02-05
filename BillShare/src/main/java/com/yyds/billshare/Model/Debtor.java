@@ -1,6 +1,7 @@
 package com.yyds.billshare.Model;
 
 
+import com.yyds.billshare.Model.Form.DebtorInfo;
 import lombok.*;
 import org.hibernate.Hibernate;
 
