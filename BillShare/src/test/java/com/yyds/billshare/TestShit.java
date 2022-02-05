@@ -20,7 +20,7 @@ import java.util.List;
 
 @DataJpaTest
 //@SpringBootTest
-public class testshit {
+public class TestShit {
     @Autowired
     private TestEntityManager entityManager;
     @Autowired
@@ -36,8 +36,7 @@ public class testshit {
         // create 3 bills and 1 user
         // 1. let user add 3 bills
         // 2. let bills add user
-        User u1 = new User(null,"Yuning","Xie","4_Celery","xieyn12345@gmail.com",null,
-                "122345",9499927197L);
+        User u1 = new User(null,"Yuning","Xie","4_Celery","xieyn12345@gmail.com","122345", 9499927197L,null,null);
         System.out.println(u1.getBills().size());
 
         Bill b1 = new Bill(null,null,10,"shit",0,null,null,"shit","pay now");
@@ -76,10 +75,10 @@ public class testshit {
         // create 3 debtors
         // 2. let bills add user
         Date date = new Date();
-        User u1 = new User(null,"Yuning","Xie","4_Celery","test@gmail.com",null,
-                "122345",9499927197L);
-        User u2 = new User(null,"Yizhuang","Peng","darlingof2","peng@gmail.com",null,
-                "122345",9499927197L);
+        User u1 = new User(null,"Yuning","Xie","4_Celery","xieyn12345@gmail.com","122345", 9499927197L,null,null);
+
+        User u2 = new User(null,"Yizhuang","Peng","darlingof2","peng@gmail.com","122345",
+                9499927197L,null,null);
         Bill b1 = new Bill(null,u1,10,"shit",0,null,null,"shit","pay now",null);
         Debtor d1 = new Debtor(u2,b1,0, new Timestamp(date.getTime()),null,10);
         Debtor d2 = new Debtor(u1,b1,0,null,null,20);

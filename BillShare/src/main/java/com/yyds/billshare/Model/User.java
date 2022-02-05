@@ -35,16 +35,6 @@ public class User {
     @ToString.Exclude
     private List<Bill> bills = new ArrayList<>();
 
-    public User(Integer uid, String firstname, String lastname, String nickname, String email, String avatar, String password, Long tel) {
-        this.uid = uid;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.nickname = nickname;
-        this.email = email;
-        this.avatar = avatar;
-        this.password = password;
-        this.tel = tel;
-    }
     public User(UserSignupForm userInfo){
         this.firstname = userInfo.getFirstname();
         this.lastname = userInfo.getLastname();

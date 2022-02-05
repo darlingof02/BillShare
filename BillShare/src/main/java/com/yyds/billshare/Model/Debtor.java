@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -29,10 +30,10 @@ public class Debtor {
 
     private int status;
     @Column(name = "accept_time")
-    private Timestamp acceptTime;
+    private Date acceptTime;
 
     @Column(name = "pay_time")
-    private Timestamp payTime;
+    private Date payTime;
 
     private int amount;
 

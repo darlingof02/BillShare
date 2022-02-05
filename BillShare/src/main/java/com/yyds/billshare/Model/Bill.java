@@ -1,11 +1,13 @@
 package com.yyds.billshare.Model;
 
 
+import com.yyds.billshare.Model.Form.BillCreateForm;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -31,9 +33,9 @@ public class Bill {
     private int status;
 
     @Column(name = "create_time")
-    private Timestamp creatTime;
+    private Date creatTime;
     @Column(name = "finish_time")
-    private Timestamp finishTime;
+    private Date finishTime;
 
     private String type;
     private String comment;
@@ -53,6 +55,15 @@ public class Bill {
         this.finishTime = finishTime;
         this.type = type;
         this.comment = comment;
+    }
+
+    public Bill(BillCreateForm form) {
+        this.amount = form.getAmount();
+        this.receipt = form.getReceipt().getOriginalFilename();
+        this.status = 0;
+        this.creatTime = form.getCreateTime();
+        this.type = form.getType();
+        this.comment = form.getComment();
     }
 
     @Override

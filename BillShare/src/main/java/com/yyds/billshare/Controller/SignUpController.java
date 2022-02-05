@@ -3,7 +3,6 @@ import com.yyds.billshare.Model.Form.UserSignupForm;
 import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +16,7 @@ import java.io.IOException;
 public class SignUpController {
 
     // image save path
-    @Value("/Users/yuning/Documents/GitHub/BillShare/BillShare/src/main/resources/static/image")
+    @Value("/Users/yuning/Documents/GitHub/BillShare/BillShare/src/main/resources/static/image/avatar")
     private String avatarSavePath;
     private final UserRepository userJpaRepository;
     public SignUpController(UserRepository userJpaRepository) {
@@ -33,7 +32,6 @@ public class SignUpController {
         if(!form.getAvatar().isEmpty())
             this.saveAvatar(form.getAvatar());
         userJpaRepository.save(new User(form));
-
 
         // TODO: should throw exception if the email has been used
         return "register successful";

@@ -12,15 +12,15 @@ import java.util.List;
 @Service
 public class JwtUserDetailsService  implements UserDetailsService {
 
-    private final UserRepository userJpaRepository;
+    private final UserRepository userRepository;
 
-    public JwtUserDetailsService(UserRepository userJpaRepository) {
-        this.userJpaRepository = userJpaRepository;
+    public JwtUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<User> users = userJpaRepository.findByEmail(username);
+        List<User> users = userRepository.findByEmail(username);
         if(users==null || users.isEmpty())
             throw new UsernameNotFoundException(String.format("USER_NOT_FOUND '%s'.", username));
         User user = users.get(0);
