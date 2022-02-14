@@ -16,7 +16,7 @@ spring:
       hibernate:
         dialect=org:
           hibernate:
-            dialect: org.hibernate.dialect.MySQL8Dialect
+            dialect: org.hibernate.dialect.MySQL57Dialect
     show-sql: true
     hibernate:
       ddl-auto: update
@@ -41,6 +41,6 @@ jwt:
     expiration:
       in:
         seconds: 604800
-
-
+server:
+  port: 8888
 

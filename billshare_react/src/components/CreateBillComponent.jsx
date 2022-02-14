@@ -29,13 +29,11 @@ class CreateBillComponent extends Component {
                 </fieldset>
 
                 <fieldset>
-                    <label>email:</label>
-                    <input name = "email" type="email" placeholder = "email"></input>
-                </fieldset>
+                    <label>debtor1 email:</label>
+                    <input name = "debtor[0][email]" type="email" placeholder = "debtor1email"></input>
 
-                <fieldset>
-                    <label>email:</label>
-                    <input name = "email" type="email" placeholder = "email"></input>
+                    <label>debtor1 amount:</label>
+                    <input name = "debtor[0][email]" type="email" placeholder = "email"></input>
                 </fieldset>
 
                 <fieldset>

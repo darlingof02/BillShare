@@ -13,7 +13,7 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "indebt")
-@IdClass(DebtorPK.class)
+@IdClass(InDebtPK.class)
 @AllArgsConstructor
 @NoArgsConstructor
 public class InDebt {

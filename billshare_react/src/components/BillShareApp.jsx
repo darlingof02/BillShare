@@ -8,16 +8,19 @@ import LoginComponent from './LoginComponent';
 import RequireAuth from "./RequireAuth";
 import WelcomeComponent from './WelcomeComponent';
 import CreateBillComponent from './CreateBillComponent'
+import TestMaterialUI from './MaterialUI/TestMaterialUI'
+import Layout from "./MaterialUI/Layout";
 class BillShareApp extends Component {
     render(){
         return (
             <div className="BillShareApp">
                 {/* This is todo application<br/> */}
                 <Router>
-                    <HeaderComponent/>
+                    {/* <HeaderComponent/> */}
+                    <Layout>
                     <Routes>
                         {/* <Route path="/login" element={<LoginComponent/>}/> */}
-                        <Route path="/" element={<LoginComponent/>}/>
+                        <Route path="/" element={<TestMaterialUI/>}/>
                         <Route path="/signup" element={<SignUpComponent/>}/>
                         <Route path="/login" element={<LoginComponent/>}/>
 
@@ -26,7 +29,8 @@ class BillShareApp extends Component {
 
                         <Route path="/test" element={<TestFileUpComponent/>}/>
                     </Routes>
-                    <FooterComponent/>
+                    </Layout>
+                    
                 </Router>
                     {/* <Route path="/" element={<LoginComponent/>}/>
                         <Route path="/login" element={<LoginComponent/>}/>

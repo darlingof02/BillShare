@@ -48,7 +48,6 @@ public class BillController {
             return bindingResult.getAllErrors().toString();
         }
 
-
         Bill bill = new Bill(billCreateForm);
         User owner = getUserFromJWT(token.substring(7));
         bill.setOwner(owner);
@@ -93,9 +92,6 @@ public class BillController {
         User debtor = getUserFromJWT(token.substring(7));
         return inDebtRepository.findByDebtorAndStatus(debtor,0);
     }
-
-
-
 
 
     private User getUserByEmail(String email){

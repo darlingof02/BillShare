@@ -1,6 +1,5 @@
 package com.yyds.billshare.Controller;
 
-
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -65,7 +64,6 @@ public class TestAnythingController {
     @PostMapping("/test/test_up")
     @ResponseBody
     public String testUpload(@RequestParam(value = "username") String username,
-//                             @RequestBody String password,
                              @RequestParam(value = "avatar") MultipartFile avatar) throws IOException {
         String originalFilename = avatar.getOriginalFilename();
         String savePath = "/Users/yuning/Documents/GitHub/BillShare/src/main/resources/static/image";
@@ -80,11 +78,7 @@ public class TestAnythingController {
 
     @PostMapping("/test/create_bill")
     @ResponseBody
-    public String createBill(
-//            MultipartFile receipt,
-            BillCreateForm form
-    ){
-        //conclusion 带有multipart的，两个参数注释可以不写
+    public String createBill(BillCreateForm form){
         log.info(form.toString());
         if(form.getReceipt().getSize()==0)
             log.info("wocaonima");

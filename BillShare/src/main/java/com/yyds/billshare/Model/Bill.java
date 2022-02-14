@@ -33,7 +33,7 @@ public class Bill {
     private int status;
 
     @Column(name = "create_time")
-    private Date creatTime;
+    private Date createTime;
     @Column(name = "finish_time")
     private Date finishTime;
 
@@ -45,13 +45,13 @@ public class Bill {
     private Set<InDebt> inDebts = new HashSet<>();
 
 
-    public Bill(Integer bid, User owner, int amount, String receipt, int status, Timestamp creatTime, Timestamp finishTime, String type, String comment) {
+    public Bill(Integer bid, User owner, int amount, String receipt, int status, Timestamp createTime, Timestamp finishTime, String type, String comment) {
         this.bid = bid;
         this.owner = owner;
         this.amount = amount;
         this.receipt = receipt;
         this.status = status;
-        this.creatTime = creatTime;
+        this.createTime = createTime;
         this.finishTime = finishTime;
         this.type = type;
         this.comment = comment;
@@ -61,7 +61,7 @@ public class Bill {
         this.amount = form.getAmount();
         this.receipt = form.getReceipt().getOriginalFilename();
         this.status = 0;
-        this.creatTime = form.getCreateTime();
+        this.createTime = form.getCreateTime();
         this.type = form.getType();
         this.comment = form.getComment();
     }
