@@ -44,3 +44,12 @@ jwt:
 server:
   port: 8888
 
+
+path:
+  avatar: /Users/yuning/Documents/GitHub/BillShare/BillShare/src/main/resources/static/image/avatar
+  receipt: /Users/yuning/Documents/GitHub/BillShare/BillShare/src/main/resources/static/image/receipt
+
+
+
+
+
