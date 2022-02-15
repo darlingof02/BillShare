@@ -34,19 +34,13 @@ public class UserController {
         }
 
         if(!form.getAvatar().isEmpty())
-            this.saveAvatar(form.getAvatar());
+            controllerHelper.saveFile(avatarSavePath, form.getAvatar());
         userJpaRepository.save(new User(form));
 
         // TODO: should throw exception if the email has been used
         return "register successful";
     }
 
-    //save avatar
-    private void saveAvatar(MultipartFile avatar) throws IOException {
-        String avatarPath = avatar.getOriginalFilename();
-        String saveFilePath = avatarSavePath + File.separator + avatarPath;
-        avatar.transferTo(new File(saveFilePath));
-    }
 
     @PostMapping("/edit_profile")
     public String editProfile (@Valid UserEditInfoForm form,
@@ -59,9 +53,21 @@ public class UserController {
         User user = controllerHelper.getUserFromJWT(jwtToken);
         user.editInfo(form);
 
-        // TODO: delete old avatar
+        // delete old avatar
+        try{
+            File file = new File(avatarSavePath + File.separator + user.getAvatar());
+            if(file.delete()){
+                System.out.println(file.getName() + " old avatar has been deleted!");
+            }else{
+                System.out.println("failed to delete old avatar!");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
         if(form.getAvatar()!=null && !form.getAvatar().isEmpty())
-            this.saveAvatar(form.getAvatar());
+            controllerHelper.saveFile(avatarSavePath, form.getAvatar());
         userJpaRepository.save(user);
 
         return "edit info successful";
