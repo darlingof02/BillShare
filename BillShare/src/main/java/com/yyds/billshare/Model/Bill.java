@@ -7,10 +7,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -42,7 +39,7 @@ public class Bill {
 
     @OneToMany(mappedBy = "bill")
     @ToString.Exclude
-    private Set<InDebt> inDebts = new HashSet<>();
+    private List<InDebt> inDebts = new ArrayList<>();
 
 
     public Bill(Integer bid, User owner, int amount, String receipt, int status, Timestamp createTime, Timestamp finishTime, String type, String comment) {

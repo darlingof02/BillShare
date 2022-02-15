@@ -1,5 +1,6 @@
 package com.yyds.billshare.Model;
 
+import com.yyds.billshare.Model.Form.UserEditInfoForm;
 import com.yyds.billshare.Model.Form.UserSignupForm;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -49,6 +50,23 @@ public class User {
 
         this.tel = userInfo.getTel();
         this.avatar = userInfo.getAvatar().getOriginalFilename();
+    }
+
+    public void editInfo(UserEditInfoForm userInfo){
+        if(userInfo.getFirstname() != null)
+            this.firstname = userInfo.getFirstname();
+        if(userInfo.getLastname() != null)
+            this.lastname = userInfo.getLastname();
+
+        if(userInfo.getNickname() != null)
+            this.nickname = userInfo.getNickname();
+
+
+        if(userInfo.getTel() != null)
+            this.tel = userInfo.getTel();
+
+        if(userInfo.getAvatar() != null && !userInfo.getAvatar().isEmpty())
+            this.avatar = userInfo.getAvatar().getOriginalFilename();
     }
 
     @Override
