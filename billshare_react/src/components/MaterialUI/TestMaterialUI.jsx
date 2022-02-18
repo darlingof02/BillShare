@@ -5,10 +5,13 @@ import { makeStyles } from "@mui/styles";
 // import { makeStyles } from "@mui/material";
 import AdjustIcon from '@mui/icons-material/Adjust';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
-import notes from './data/db.json'
+
 import Notes from "./Notes";
-import NoteCard from "./NoteCard";
-import FooterComponent from "../FooterComponent";
+import TestWebSocket from "./TestWebSocket";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+
+
 
 const useStyle = makeStyles({
     btn:{
@@ -36,6 +39,19 @@ const theme = {
 }
 <ThemeProvider theme = {theme}>
 */ 
+
+// function connect() {
+//     var socket = new SockJS('/gs-guide-websocket');
+//     var stompClient = Stomp.over(socket);
+//     stompClient.connect({}, function (frame) {
+//         // setConnected(true);
+//         console.log('Connected: ' + frame);
+//         stompClient.subscribe('/topic/greetings', function (greeting) {
+//             // showGreeting(JSON.parse(greeting.body).content);
+//         });
+//     });
+// }
+
 
 const TestMaterialUI = () => {
     const classes = useStyle()
@@ -72,6 +88,7 @@ const TestMaterialUI = () => {
             <AdjustIcon color = "error"/>
             <AdjustIcon color = "warning"/>
             <br/>
+            <TestWebSocket></TestWebSocket>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField margin="normal" variant = "outlined" label="Note title" color = "primary" required
                     onChange={(e)=>{setTitle(e.target.value)}} error={titleError}/>
@@ -93,7 +110,20 @@ const TestMaterialUI = () => {
             </form>
             <Notes></Notes>
 
-            {/* <FooterComponent/> */}
+            {/* websocket part */}
+            {/* <form class="form-inline">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <Button variant="contained" disableElevation type="submit" onClick={connect}>Connect</Button>
+                    {<Button type="submit" disabled="disabled" onClick={connect}>Disconnect
+                    </Button>}
+                </div>
+            </form> */}
+
+
+           
+
+            
         </Container>
         
     )
