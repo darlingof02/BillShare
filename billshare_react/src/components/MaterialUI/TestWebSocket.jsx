@@ -1,7 +1,7 @@
 
 import React from "react"
 import '../../api/TestWebSocket/app.js'
-import { TextField } from "@mui/material"
+import { Container, TextField } from "@mui/material"
 
 
 
@@ -22,8 +22,11 @@ export default function TestWebSocket() {
                 </div>
             </form>
         </div>
+        <br></br>
+        <br></br>
+        <Container>
         <div className="col-md-6">
-            <form className="form-inline">
+            <form >
                 <div className="form-group">
                     <label for="name">What is your name?</label>
                     <TextField type="text" id="name" className="form-control" placeholder="Your name here..."/>
@@ -31,7 +34,23 @@ export default function TestWebSocket() {
                 <button id="send" className="btn btn-default" type="submit">Send</button>
             </form>
         </div>
+        </Container>
+        <br></br>
+        <Container>
+        <div className="col-md-6">
+            <form >
+                <div className="form-group">
+                    <label for="private-name">What is your private name?</label>
+                    <TextField type="text" id="private-name" className="form-control" placeholder="Your name here..."/>
+                </div>
+                <button id="send-private" className="btn btn-default" type="submit">Send private name</button>
+            </form>
+        </div>
+        </Container>
+
+        
     </div>
+    <Container>
     <div className="row">
         <div className="col-md-12">
             <table id="conversation" className="table table-striped">
@@ -45,6 +64,7 @@ export default function TestWebSocket() {
             </table>
         </div>
     </div>
+    </Container>
 </div>
     )
 }

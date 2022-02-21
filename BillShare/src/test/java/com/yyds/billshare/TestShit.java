@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.util.Assert;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -89,6 +90,7 @@ public class TestShit {
         List<InDebt> ds = inDebtRepository.findByAmount(20);
         System.out.println("++++");
         System.out.println(ds);
+
 
 
     }

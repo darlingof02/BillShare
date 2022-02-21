@@ -44,6 +44,98 @@ TODO：
 获取一个人的所有bill
 获取一个bill的所有付款信息
 
+添加付款说明
+==============================================================================================
+
+好像还要定义通信类型
+
+
+关于通信：
+websocket通信，如果没有上线，就放到通知中去，下次上线直接获取
+需不需要一个通知库？（未来需要弄一个）
+
+bill页面轮询
+整个主页面，websocket连通
+indebt页面无操作
+
+
+
+关于通知
+user int
+noteinfo text
+type Enum(billcreation/debtaccept/pay/confirm/not paid/...)
+time Time
+Seen bool
+related ID
+
+关于信息
+Message
+type(Enum)
+sendfrom
+sendto
+payload（JSON）
+
+登录：
+后台获取最新的账单等
+建立websocket connection + jwt auth，设置principal为自己的邮箱
+subscribe 自己的频道
+
+对账单的操作：
+1. 创建账单
+前端提交BillForm表单，后端根据BillForm信息创建Bill，其中indebt status都为0，存数据库
+* 根据邮箱，转发websocket消息给在线订阅用户
+该消息封装了[owner+ bill + 特定的indebt]信息
+* 发送websocket给自己频道，成功创建+[bill + indebt]信息
+* 没在线的就下次登录的时候获取自己的信息就完事
+* （加通知）
+
+2. 确认欠款
+用户收到自己对应的indebt和owner，一条消息（看bill信息需要点进去）
+这条记录有两个建，ignore或者accept
+点accept，发生下面事情
+    前端发送Debtor(billID type=accept + debtorID)给后端
+    后端根据billID找到oid，进而找到email（要发送的人）
+    后端根据debtorID找到对应record，检查status是否为0，将相应的indebt status置为1
+    后端发送"debtorName已确认账单billID"通知给owner，
+
+    打开bill页面的时候，进行轮询
+
+点ignore
+    将该消息放入ignore列表中，可以恢复，恢复就回到列表
+
+3. 付款
+点击pay
+    前端发送indebtID+BillID，type=pay的信息到后端
+    后端根据indebtID找到record，检查status是否为1，将相应的indebt status置为2
+    后端根据indebtID找到bill，从而找到owner
+    后端发送通知"账单BillID的debtorName声明付款，请查收"给owner
+
+    owner前端打开bill页面的时候，进行轮询
+
+4. 确认付款
+用户收到通知或者看到账单记录变为待验收的时候
+有两个键，confirm，not paid
+点confirm：
+    owner前端发送indebtID(billID+debtorID)到后端
+    后端设置indebtID为3，检查账单是否完成，完成就bill状态设为1
+    后端通知debtor
+    回去，通知debtor
+
+点not paid：
+    owner向后端发送通知，后端
+
+
+5. 取消indebt
+
+
+
+
+
+
+
+
+
+
 
 
 
