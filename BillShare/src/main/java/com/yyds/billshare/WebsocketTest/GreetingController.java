@@ -40,7 +40,7 @@ public class GreetingController {
             logger.info("shithasdta");
             logger.warn(u.toString());
         }
-
         return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "! This is private greeting only for you!");
     }
+
 }

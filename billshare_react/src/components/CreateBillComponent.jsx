@@ -1,26 +1,24 @@
 import React, {Component} from "react";
-import {API_URL} from '../constant'
+import {API_URL} from '../api/constant'
 
 
-class CreateBillComponent extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            amount: 0,
-            recipt: "",
-            StartTime: null,
-            debtors:[]
-        }
-    }
-
-    render(){
-        return(
+// class CreateBillComponent extends Component {
+//     constructor(props){
+//         super(props)
+//         this.state = {
+//             amount: 0,
+//             recipt: "",
+//             StartTime: null,
+//             debtors:[]
+//         }
+//     }
+const CreateBillComponent = () => {
+    return (
         <div>
             <h1>create new bill</h1>
             <form action={`${API_URL}/create_bill`} 
                 method = 'post'
                 className = "form" 
-                // onSubmit={formik.handleSubmit} 
                 encType="multipart/form-data">
                     
                 <fieldset>
@@ -33,7 +31,7 @@ class CreateBillComponent extends Component {
                     <input name = "debtor[0][email]" type="email" placeholder = "debtor1email"></input>
 
                     <label>debtor1 amount:</label>
-                    <input name = "debtor[0][email]" type="email" placeholder = "email"></input>
+                    <input name = "debtor[0][amount]" type="number" placeholder = "amount"></input>
                 </fieldset>
 
                 <fieldset>
@@ -51,13 +49,10 @@ class CreateBillComponent extends Component {
                     <label>upload receipt:</label>
                     <input type="file" name="receipt" accept="image/png, image/jpeg, .docx, .pdf"></input>
                 </fieldset>
-                <button type="submit" className='btn-success'>Submit</button>
+                <button type="submit" className='btn-success' >Submit</button>
             </form>
         </div>
-        )
-    }
-
-
+    )
 }
 
 export default CreateBillComponent;

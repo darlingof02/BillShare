@@ -1,7 +1,7 @@
 
 import React from "react"
 import '../../api/TestWebSocket/app.js'
-import { Container, TextField } from "@mui/material"
+import { Container, TextField, Button, ButtonGroup } from "@mui/material"
 
 
 
@@ -31,7 +31,7 @@ export default function TestWebSocket() {
                     <label for="name">What is your name?</label>
                     <TextField type="text" id="name" className="form-control" placeholder="Your name here..."/>
                 </div>
-                <button id="send" className="btn btn-default" type="submit">Send</button>
+                <Button id="send" variant="contained" className="btn btn-default" type="submit" color="primary">Send</Button>
             </form>
         </div>
         </Container>
@@ -43,9 +43,10 @@ export default function TestWebSocket() {
                     <label for="private-name">What is your private name?</label>
                     <TextField type="text" id="private-name" className="form-control" placeholder="Your name here..."/>
                 </div>
-                <button id="send-private" className="btn btn-default" type="submit">Send private name</button>
+                <Button id="send-private" variant="contained" className="btn btn-default" type="submit" color="secondary">Send private name</Button>
             </form>
         </div>
+
         </Container>
 
         

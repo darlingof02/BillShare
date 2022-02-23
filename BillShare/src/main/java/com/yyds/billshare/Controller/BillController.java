@@ -92,6 +92,17 @@ public class BillController {
         return inDebtRepository.findByDebtorAndStatus(debtor,0);
     }
 
+//    =========================确认欠款==============================
+    public void accept_bill(){}
+
+//    =========================付款==============================
+    public void pay(){}
+
+//    =========================确认付款==============================
+    public void confirm_pay(){}
+
+
+
 
     private void saveReceipt(MultipartFile receipt) throws IOException {
         String avatarPath = receipt.getOriginalFilename();

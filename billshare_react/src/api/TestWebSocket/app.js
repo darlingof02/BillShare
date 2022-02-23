@@ -1,6 +1,5 @@
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import jquery from "jquery";
 import jQuery from "jquery";
 
 
@@ -36,6 +35,8 @@ function connect() {
         });
         stompClient.subscribe('/user/topic/private-greetings', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
+            // showGreeting(JSON.parse(greeting.body));
+            showGreeting(greeting.body);
         });
     });
 }
