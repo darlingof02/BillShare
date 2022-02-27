@@ -41,9 +41,9 @@ jwt:
     expiration:
       in:
         seconds: 604800
-server:
-  port: 8080
-  address: 192.168.86.74
+#server:
+#  port: 8080
+#  address: 192.168.86.74
 
 
 path:

@@ -29,9 +29,5 @@ public class UserSignupForm {
     @Size(min = 4, max = 30)
     private String password;
 
-
     private Long tel;
-
-    private MultipartFile avatar;
-
 }

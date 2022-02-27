@@ -49,7 +49,7 @@ public class User {
         this.password = encoder.encode(userInfo.getPassword());
 
         this.tel = userInfo.getTel();
-        this.avatar = userInfo.getAvatar().getOriginalFilename();
+        this.avatar = null;
     }
 
     public void editInfo(UserEditInfoForm userInfo){
