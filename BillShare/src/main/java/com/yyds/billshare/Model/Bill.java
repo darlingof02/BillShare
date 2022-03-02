@@ -56,9 +56,11 @@ public class Bill {
 
     public Bill(BillCreateForm form) {
         this.amount = form.getAmount();
-        this.receipt = form.getReceipt().getOriginalFilename();
+        if(form.getReceipt()!=null)
+            this.receipt = form.getReceipt().getOriginalFilename();
         this.status = 0;
         this.createTime = form.getCreateTime();
+        this.finishTime = form.getDueTime();
         this.type = form.getType();
         this.comment = form.getComment();
     }
