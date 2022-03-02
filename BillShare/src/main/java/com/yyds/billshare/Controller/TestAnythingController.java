@@ -46,6 +46,21 @@ public class TestAnythingController {
         String path = "/Users/yuning/Documents/GitHub/BillShare/src/main/resources/image/test.png";
         return path;
     }
+    @GetMapping("/test/string/a")
+    @ResponseBody
+    public String testAuth(@RequestParam(value = "email", required = false) String email,
+                           @RequestHeader(value = "Authorization",required = false) String token) throws IOException {
+        log.info(email);
+        if(token!=null && token.length()>0){
+            log.info(token);
+            log.info("I'm here");
+        }
+
+        if(email!=null && email.length()>0)
+            return "great  " + email;
+        String path = "not received";
+        return path;
+    }
 
     @GetMapping("/test/test_download")
     @ResponseBody

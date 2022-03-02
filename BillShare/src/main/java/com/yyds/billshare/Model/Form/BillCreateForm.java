@@ -17,6 +17,7 @@ public class BillCreateForm {
     @Min(1)
     private Integer amount;
     private Date createTime;
+    private Date dueTime;
 
     @Size(max = 30)
     private String type;

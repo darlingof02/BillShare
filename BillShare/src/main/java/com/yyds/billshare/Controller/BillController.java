@@ -10,9 +10,13 @@ import com.yyds.billshare.Repository.InDebtRepository;
 import com.yyds.billshare.Repository.UserRepository;
 import com.yyds.billshare.jwt.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,6 +32,8 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true", allowedHeaders = "*")
 public class BillController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Value("${path.receipt}")
     private String receiptSavePath;
@@ -50,7 +56,7 @@ public class BillController {
         Bill bill = new Bill(billCreateForm);
         User owner = controllerHelper.getUserFromJWT(token.substring(7));
         bill.setOwner(owner);
-        if(!billCreateForm.getReceipt().isEmpty())
+        if(billCreateForm.getReceipt()!=null && !billCreateForm.getReceipt().isEmpty())
             this.saveReceipt(billCreateForm.getReceipt());
 
         billRepository.save(bill);
@@ -62,6 +68,36 @@ public class BillController {
         }
         return "create bill successfully";
     }
+    @PostMapping("/create-bill")
+    public ResponseEntity<?> createBillJson(@Valid @RequestBody BillCreateForm billCreateForm,
+                                         BindingResult bindingResult,
+                                         @RequestHeader(value = "Authorization", required = false) String token) throws IOException {
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<String>(bindingResult.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
+        }
+
+        logger.info(billCreateForm.toString());
+
+        Bill bill = new Bill(billCreateForm);
+        User owner = controllerHelper.getUserFromJWT(token.substring(7));
+        bill.setOwner(owner);
+        if(billCreateForm.getReceipt()!=null && !billCreateForm.getReceipt().isEmpty())
+            this.saveReceipt(billCreateForm.getReceipt());
+
+        billRepository.save(bill);
+        //save debtors
+        for(DebtorInfo debtorInfo: billCreateForm.getDebtorInfos()){
+            User d = controllerHelper.getUserByEmail(debtorInfo.getDebtorEmail());
+            logger.warn(debtorInfo.getAmount().toString());
+            InDebt inDebt = new InDebt(d,bill,0,null,null,debtorInfo.getAmount());
+            inDebtRepository.save(inDebt);
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+
+
+
 
     @GetMapping("/owned_bills")
     public List<Bill> getOwnedBills(@RequestHeader(value = "Authorization") String token){

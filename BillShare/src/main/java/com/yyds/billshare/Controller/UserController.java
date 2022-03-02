@@ -36,7 +36,6 @@ public class UserController {
         if(bindingResult.hasErrors()){
             System.out.println(form.toString());
             System.out.println(bindingResult.getAllErrors());
-
             throw new FormInfoException(ExceptionEnum.FORM_ERROR);
         }
 
@@ -47,6 +46,23 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // TODO 前端jwt axios没传过来
+    @GetMapping("/check-user")
+    public ResponseEntity<?> checkUser(@RequestParam String email,
+                            @RequestHeader(value = "Authorization", required = false) String jwtToken) throws IOException {
+        System.out.println(email);
+        System.out.println(jwtToken);
+        if(jwtToken!=null){
+            User user = controllerHelper.getUserFromJWT(jwtToken.substring(7));
+            if(email.equals(user.getEmail()) || !userJpaRepository.existsByEmail(email))
+                return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+            else
+                return new ResponseEntity<Void>(HttpStatus.OK);
+        }
+        return userJpaRepository.existsByEmail(email)?
+                new ResponseEntity<Void>(HttpStatus.OK):new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+
+    }
 
     @PostMapping("/edit_profile")
     public String editProfile (@Valid UserEditInfoForm form,
