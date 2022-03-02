@@ -4,6 +4,7 @@ import com.yyds.billshare.Model.Bill;
 import com.yyds.billshare.Model.InDebt;
 import com.yyds.billshare.Model.Form.BillCreateForm;
 import com.yyds.billshare.Model.Form.DebtorInfo;
+import com.yyds.billshare.Model.ResponseModel.ResponseOwnedBill;
 import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.BillRepository;
 import com.yyds.billshare.Repository.InDebtRepository;
@@ -96,14 +97,15 @@ public class BillController {
     }
 
 
-
-
-
     @GetMapping("/owned_bills")
-    public List<Bill> getOwnedBills(@RequestHeader(value = "Authorization") String token){
+    public List<ResponseOwnedBill> getOwnedBills(@RequestHeader(value = "Authorization") String token){
         User owner = controllerHelper.getUserFromJWT(token.substring(7));
-        return billRepository.findByOwner(owner);
+        List<ResponseOwnedBill> bills =  billRepository.findByOwnerId(owner.getUid());
+
+//        logger.warn(bills.get(0).toString());
+        return bills;
     }
+
 
     @GetMapping("/owned_bills/{bid}")
     public List<InDebt> getDebtorsByBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token){
