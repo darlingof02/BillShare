@@ -41,14 +41,14 @@ jwt:
     expiration:
       in:
         seconds: 604800
-server:
-  port: 8080
-  address: 192.168.86.74
+#server:
+#  port: 8080
+#  address: 192.168.86.74
 
 
 path:
-  avatar: /Users/yuning/Documents/GitHub/BillShare/BillShare/src/main/resources/static/image/avatar
-  receipt: /Users/yuning/Documents/GitHub/BillShare/BillShare/src/main/resources/static/image/receipt
+  avatar: /Users/pengyizhuang/Code/Java/BillShare/BillShare/src/main/resources/static/image/avatar
+  receipt: /Users/pengyizhuang/Code/Java/BillShare/BillShare/src/main/resources/static/image/receipt
 
 
 

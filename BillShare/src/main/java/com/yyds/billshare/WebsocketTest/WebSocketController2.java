@@ -19,6 +19,7 @@ public class WebSocketController2 {
     private WebsocketService websocketService;
     @Autowired
     private BillRepository billRepository;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/send-message")
