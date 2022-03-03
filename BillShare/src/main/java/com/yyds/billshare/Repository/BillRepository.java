@@ -14,6 +14,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     List<Bill> findByAmount(int amount);
 
+
     @Query("SELECT b FROM Bill as b WHERE b.owner.uid =?1")
     List<ResponseOwnedBill> findByOwnerId(Integer oid);
 

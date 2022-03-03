@@ -99,13 +99,23 @@ public class BillController {
 
     @GetMapping("/owned_bills")
     public List<ResponseOwnedBill> getOwnedBills(@RequestHeader(value = "Authorization") String token){
+//        System.out.println("what the hell");
         User owner = controllerHelper.getUserFromJWT(token.substring(7));
         List<ResponseOwnedBill> bills =  billRepository.findByOwnerId(owner.getUid());
 
-//        logger.warn(bills.get(0).toString());
+        logger.warn(bills.get(0).toString());
         return bills;
     }
+    @GetMapping("/test/owned_bills")
+    public List<ResponseOwnedBill> getOwned(@RequestHeader(value = "Authorization") String token){
+//        System.out.println("what the hell");
+        User owner = controllerHelper.getUserFromJWT(token.substring(7));
+        List<Bill> bills =  billRepository.findByAmount(10000);
+        logger.warn(bills.toString());
 
+        logger.warn(bills.get(0).toString());
+        return null;
+    }
 
     @GetMapping("/owned_bills/{bid}")
     public List<InDebt> getDebtorsByBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token){
