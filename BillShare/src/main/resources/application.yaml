@@ -11,6 +11,10 @@ spring:
     password: ${RDS_PASSWORD:123456}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
   jpa:
     properties:
       hibernate:

@@ -1,6 +1,7 @@
 package com.yyds.billshare.Model.ResponseModel;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yyds.billshare.Model.Bill;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 public class ResponseOwnedBill {
     private Integer bid;
     private Integer status;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date due;
     private Integer amount;
     private String ownerEmail;

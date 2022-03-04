@@ -1,6 +1,7 @@
 package com.yyds.billshare.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yyds.billshare.Model.Form.BillCreateForm;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -30,8 +31,10 @@ public class Bill {
     private int status;
 
     @Column(name = "create_time")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date createTime;
     @Column(name = "finish_time")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date finishTime;
 
     private String type;
