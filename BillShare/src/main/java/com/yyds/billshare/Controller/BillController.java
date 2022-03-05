@@ -24,10 +24,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
+// TODO: 所有的返回类型可以都改成ResponseEntity<原返回类型>，这样可以自定义response status或者header
 
 @Slf4j
 @RestController
@@ -47,11 +51,11 @@ public class BillController {
     private ControllerHelper controllerHelper;
 
     @PostMapping("/createbill")
-    public String createBill(@Valid BillCreateForm billCreateForm,
+    public ResponseEntity<String> createBill(@Valid BillCreateForm billCreateForm,
                              BindingResult bindingResult,
                              @RequestHeader(value = "Authorization") String token) throws IOException {
         if(bindingResult.hasErrors()){
-            return bindingResult.getAllErrors().toString();
+            return new ResponseEntity<>(bindingResult.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
         }
 
         Bill bill = new Bill(billCreateForm);
@@ -67,7 +71,7 @@ public class BillController {
             InDebt inDebt = new InDebt(d,bill,0,null,null,debtorInfo.getAmount());
             inDebtRepository.save(inDebt);
         }
-        return "create bill successfully";
+        return new ResponseEntity<>("create bill successfully", HttpStatus.CREATED);
     }
     @PostMapping("/create-bill")
     public ResponseEntity<?> createBillJson(@Valid @RequestBody BillCreateForm billCreateForm,
@@ -93,7 +97,7 @@ public class BillController {
             InDebt inDebt = new InDebt(d,bill,0,null,null,debtorInfo.getAmount());
             inDebtRepository.save(inDebt);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<String>("Create bill successfully!",HttpStatus.CREATED);
     }
 
 
@@ -131,14 +135,55 @@ public class BillController {
     }
 
 //    =========================确认欠款==============================
-    public void accept_bill(){}
 
-//    =========================付款==============================
-    public void pay(){}
+    @PutMapping("/debt/{bid}")
+    public ResponseEntity<?> UpgradeDebtStatus( @PathVariable Integer bid,
+                                                @RequestHeader(value = "Authorization") String token) {
+        String debtorEmail = controllerHelper.getEmailFromJWT(token);
+        Optional<InDebt> debt = inDebtRepository.findByDebtorEmailAndBillId(debtorEmail, bid);
+        /*
+        * 判断是否合法
+        * 这个人是不是拥有这个债，没有的话报错
+        * 这个人有没有权限升级这个债
+        * */
+        if(debt.isEmpty())
+            return new ResponseEntity<String>("No such debt!",HttpStatus.NOT_FOUND);
+        InDebt d = debt.get();
+        switch (d.getStatus()){
+            case 0:
+                d.setStatus(1);
+                // TODO: add log or push message to user
+                break;
+            case 1:
+                d.setStatus(2);
+                break;
+            default:
+                return new ResponseEntity<String>("No permission to upgrade debt status",HttpStatus.FORBIDDEN);
+        }
+        inDebtRepository.save(d);
+        return new ResponseEntity<String>("Debt status upgraded",HttpStatus.OK);
+    }
 
-//    =========================确认付款==============================
-    public void confirm_pay(){}
-
+    @PutMapping("/bill/{bid}/{did}")
+    public ResponseEntity<?> UpgradeBillDebtStatus( @PathVariable Integer bid,
+                                                    @PathVariable Integer did,
+                                                    @RequestHeader(value = "Authorization") String token) {
+        // 判断用户是否有权限操作这个账单的内容（判断用户是否拥有这个账单）
+        String ownerEmail = controllerHelper.getEmailFromJWT(token);
+        if(billRepository.findByOwnerEmailAndBid(ownerEmail, bid).isEmpty()){
+            return new ResponseEntity<String>("No such bill",HttpStatus.NOT_FOUND);
+        }
+        // 判断是否存在这个债
+        Optional<InDebt> debt = inDebtRepository.findByDebtorIdAndBillId(did, bid);
+        if(debt.isEmpty()){
+            return new ResponseEntity<String>("No such debt in the bill",HttpStatus.NOT_FOUND);
+        }
+        // 判断用户是否有权限操作这个账单
+        InDebt d =debt.get();
+        if(d.getStatus() != 2)
+            return new ResponseEntity<String>("No permission",HttpStatus.FORBIDDEN);
+        return new ResponseEntity<String>("Debt status upgraded",HttpStatus.OK);
+    }
 
 
 

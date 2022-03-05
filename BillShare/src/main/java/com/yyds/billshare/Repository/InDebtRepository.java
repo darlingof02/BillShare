@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InDebtRepository extends JpaRepository<InDebt, User> {
@@ -17,7 +18,11 @@ public interface InDebtRepository extends JpaRepository<InDebt, User> {
     List<InDebt> findByDebtor(User debtor);
     List<InDebt> findByDebtorAndStatus(User debtor,Integer status);
 
+    @Query("SELECT d FROM InDebt d WHERE d.debtor.email = ?1 AND d.bill.bid = ?2")
+    Optional<InDebt> findByDebtorEmailAndBillId(String email, Integer bid);
 
+    @Query("SELECT d FROM InDebt d WHERE d.debtor.id = ?1 AND d.bill.bid = ?2")
+    Optional<InDebt> findByDebtorIdAndBillId(Integer did, Integer bid);
 
     // 好像没用
     @Query("SELECT bill FROM InDebt WHERE debtor =?1")

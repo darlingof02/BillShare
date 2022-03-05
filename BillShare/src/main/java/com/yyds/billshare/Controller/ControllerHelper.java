@@ -33,6 +33,8 @@ public class ControllerHelper {
         return getUserByEmail(email);
     }
     public String getEmailFromJWT(String jwtToken){
+        if(jwtToken.startsWith("Bearer "))
+            jwtToken = jwtToken.substring(7);
         return jwtTokenUtil.getUsernameFromToken(jwtToken);
     }
 

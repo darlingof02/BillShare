@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Integer> {
@@ -16,5 +17,8 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Query("SELECT b FROM Bill as b WHERE b.owner.uid =?1")
     List<ResponseOwnedBill> findByOwnerId(Integer oid);
+
+    @Query("SELECT b FROM Bill as b WHERE b.owner.email =?1 AND b.bid = ?2")
+    Optional<Bill> findByOwnerEmailAndBid(String ownerEmail,Integer bid);
 
 }
