@@ -4,6 +4,8 @@ import com.yyds.billshare.Model.Bill;
 import com.yyds.billshare.Model.InDebt;
 import com.yyds.billshare.Model.Form.BillCreateForm;
 import com.yyds.billshare.Model.Form.DebtorInfo;
+import com.yyds.billshare.Model.ResponseModel.ResponseDebtForOneBill;
+import com.yyds.billshare.Model.ResponseModel.ResponseOneBill;
 import com.yyds.billshare.Model.ResponseModel.ResponseOwnedBill;
 import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.BillRepository;
@@ -101,25 +103,49 @@ public class BillController {
     }
 
 
+    /**
+     * Used to require bills created by user
+     * @param token (JWT Token)
+     * @return List of ResponseOwnedBill
+     */
     @GetMapping("/owned_bills")
     public List<ResponseOwnedBill> getOwnedBills(@RequestHeader(value = "Authorization") String token){
+//        System.out.println("what the hell");
         User owner = controllerHelper.getUserFromJWT(token.substring(7));
         List<ResponseOwnedBill> bills =  billRepository.findByOwnerId(owner.getUid());
 
-//        logger.warn(bills.get(0).toString());
+        logger.warn(bills.get(0).toString());
         return bills;
     }
+//    @GetMapping("/test/owned_bills")
+//    public List<ResponseOwnedBill> getOwned(@RequestHeader(value = "Authorization") String token){
+////        System.out.println("what the hell");
+//        User owner = controllerHelper.getUserFromJWT(token.substring(7));
+//        List<Bill> bills =  billRepository.findByAmount(10000);
+//        logger.warn(bills.toString());
+//
+//        logger.warn(bills.get(0).toString());
+//        return null;
+//    }
 
-
+    /**
+     * used to get All InDebtor and their Amount for a certain Bill
+     * @param bid (id of certain bill that user created)
+     * @param token (JWT Token of certain user)
+     * @return A list of ResponseDebt
+     */
     @GetMapping("/owned_bills/{bid}")
-    public List<InDebt> getDebtorsByBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token){
+    public List<ResponseDebtForOneBill> getDebtorsByBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token){
         User owner = controllerHelper.getUserFromJWT(token.substring(7));
         Bill bill = billRepository.getById(bid);
         if(!bill.getOwner().equals(owner)){
             log.warn("Unable to fetch data. " + owner.getEmail() + " has no permission!");
             throw new RuntimeException();
         }
-        return inDebtRepository.findByBill(bill);
+
+        List<ResponseDebtForOneBill> indebts = inDebtRepository.findByBill(bill);
+        logger.warn(indebts.get(0).toString());
+        return indebts;
     }
 
     @GetMapping("/history_in_debt_bills")
@@ -132,6 +158,13 @@ public class BillController {
     public List<InDebt> getBillsToBePaid(@RequestHeader(value = "Authorization") String token){
         User debtor = controllerHelper.getUserFromJWT(token.substring(7));
         return inDebtRepository.findByDebtorAndStatus(debtor,0);
+    }
+
+    @GetMapping("/bills/{bid}")
+    public ResponseOneBill getOneBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token) {
+        List<ResponseOneBill> bills = billRepository.findByBid(bid);
+        logger.warn(bills.get(0).toString());
+        return bills.get(0);
     }
 
 //    =========================确认欠款==============================

@@ -11,6 +11,10 @@ spring:
     password: ${RDS_PASSWORD:123456}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
   jpa:
     properties:
       hibernate:
@@ -47,8 +51,8 @@ jwt:
 
 
 path:
-  avatar: /Users/yuning/Documents/GitHub/BillShare/BillShare/src/main/resources/static/image/avatar
-  receipt: /Users/yuning/Documents/GitHub/BillShare/BillShare/src/main/resources/static/image/receipt
+  avatar: /Users/pengyizhuang/Code/Java/BillShare/BillShare/src/main/resources/static/image/avatar
+  receipt: /Users/pengyizhuang/Code/Java/BillShare/BillShare/src/main/resources/static/image/receipt
 
 
 

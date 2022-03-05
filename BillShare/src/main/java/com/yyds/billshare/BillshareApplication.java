@@ -10,16 +10,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Timestamp;
 import java.util.Date;
-
 
 @SpringBootApplication
 public class BillshareApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(BillshareApplication.class, args);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode("password"));
+
 //        BillshareApplication billshareApplication = new BillshareApplication();
 //        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 //        context.register(UserRepository.class);
