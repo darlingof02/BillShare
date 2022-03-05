@@ -15,7 +15,7 @@ import java.util.Date;
 public class ResponseDebtForOneBill {
     private String debtorEmail;
     private String debtorAvatar;
-    private String debtorNickname;
+    private String debtorNickName;
     private String debtorFirstName;
     private String debtorLastName;
     private Long debtorTel;
@@ -25,18 +25,29 @@ public class ResponseDebtForOneBill {
     private Date acceptTime;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date payTime;
+    private Integer debtorId;
+//    private String comment;
+//    private Integer totalAmount;
+//    @JsonFormat(pattern="yyyy-MM-dd")
+//    private Date createTime;
+//    @JsonFormat(pattern="yyyy-MM-dd")
+//    private Date due;
+//    private String receipt;
+//    private String type;
 
     public ResponseDebtForOneBill(User debtor, int amount, Date acceptTime, Date payTime, int status) {
         this.acceptTime = acceptTime;
         this.payTime = payTime;
         this.status = status;
         this.amount = amount;
-        this.debtorNickname = debtor.getNickname();
+
+        this.debtorNickName = debtor.getNickname();
         this.debtorFirstName = debtor.getFirstname();
         this.debtorLastName = debtor.getLastname();
         this.debtorEmail = debtor.getEmail();
         this.debtorTel = debtor.getTel();
         this.debtorAvatar = debtor.getAvatar();
+        this.debtorId = debtor.getUid();
     }
 
 

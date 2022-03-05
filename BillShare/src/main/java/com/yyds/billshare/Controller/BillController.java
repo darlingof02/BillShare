@@ -5,6 +5,7 @@ import com.yyds.billshare.Model.InDebt;
 import com.yyds.billshare.Model.Form.BillCreateForm;
 import com.yyds.billshare.Model.Form.DebtorInfo;
 import com.yyds.billshare.Model.ResponseModel.ResponseDebtForOneBill;
+import com.yyds.billshare.Model.ResponseModel.ResponseOneBill;
 import com.yyds.billshare.Model.ResponseModel.ResponseOwnedBill;
 import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.BillRepository;
@@ -153,6 +154,13 @@ public class BillController {
     public List<InDebt> getBillsToBePaid(@RequestHeader(value = "Authorization") String token){
         User debtor = controllerHelper.getUserFromJWT(token.substring(7));
         return inDebtRepository.findByDebtorAndStatus(debtor,0);
+    }
+
+    @GetMapping("/bills/{bid}")
+    public ResponseOneBill getOneBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token) {
+        List<ResponseOneBill> bills = billRepository.findByBid(bid);
+        logger.warn(bills.get(0).toString());
+        return bills.get(0);
     }
 
 //    =========================确认欠款==============================

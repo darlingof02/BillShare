@@ -16,6 +16,8 @@ public class ResponseOwnedBill {
     private Integer amount;
     private String ownerEmail;
 
+
+
     public ResponseOwnedBill(Bill bill) {
         bid = bill.getBid();
         status = bill.getStatus();
