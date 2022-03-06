@@ -5,6 +5,7 @@ import com.yyds.billshare.Model.InDebt;
 import com.yyds.billshare.Model.Form.BillCreateForm;
 import com.yyds.billshare.Model.Form.DebtorInfo;
 import com.yyds.billshare.Model.ResponseModel.ResponseDebtForOneBill;
+import com.yyds.billshare.Model.ResponseModel.ResponseDebtsByDebtor;
 import com.yyds.billshare.Model.ResponseModel.ResponseOneBill;
 import com.yyds.billshare.Model.ResponseModel.ResponseOwnedBill;
 import com.yyds.billshare.Model.User;
@@ -52,6 +53,7 @@ public class BillController {
     @Autowired
     private ControllerHelper controllerHelper;
 
+    // 弃用
     @PostMapping("/createbill")
     public ResponseEntity<String> createBill(@Valid BillCreateForm billCreateForm,
                              BindingResult bindingResult,
@@ -75,6 +77,7 @@ public class BillController {
         }
         return new ResponseEntity<>("create bill successfully", HttpStatus.CREATED);
     }
+    // Create bills handler
     @PostMapping("/create-bill")
     public ResponseEntity<?> createBillJson(@Valid @RequestBody BillCreateForm billCreateForm,
                                          BindingResult bindingResult,
@@ -110,24 +113,11 @@ public class BillController {
      */
     @GetMapping("/owned_bills")
     public List<ResponseOwnedBill> getOwnedBills(@RequestHeader(value = "Authorization") String token){
-//        System.out.println("what the hell");
         User owner = controllerHelper.getUserFromJWT(token.substring(7));
         List<ResponseOwnedBill> bills =  billRepository.findByOwnerId(owner.getUid());
-
-        logger.warn(bills.get(0).toString());
+//        logger.warn(bills.get(0).toString());
         return bills;
     }
-//    @GetMapping("/test/owned_bills")
-//    public List<ResponseOwnedBill> getOwned(@RequestHeader(value = "Authorization") String token){
-////        System.out.println("what the hell");
-//        User owner = controllerHelper.getUserFromJWT(token.substring(7));
-//        List<Bill> bills =  billRepository.findByAmount(10000);
-//        logger.warn(bills.toString());
-//
-//        logger.warn(bills.get(0).toString());
-//        return null;
-//    }
-
     /**
      * used to get All InDebtor and their Amount for a certain Bill
      * @param bid (id of certain bill that user created)
@@ -135,29 +125,17 @@ public class BillController {
      * @return A list of ResponseDebt
      */
     @GetMapping("/owned_bills/{bid}")
-    public List<ResponseDebtForOneBill> getDebtorsByBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token){
+    public ResponseEntity<?> getDebtorsByBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token){
         User owner = controllerHelper.getUserFromJWT(token.substring(7));
         Bill bill = billRepository.getById(bid);
         if(!bill.getOwner().equals(owner)){
             log.warn("Unable to fetch data. " + owner.getEmail() + " has no permission!");
-            throw new RuntimeException();
+//            throw new RuntimeException();
+            return new ResponseEntity<String>("No such bill",HttpStatus.FORBIDDEN);
         }
-
         List<ResponseDebtForOneBill> indebts = inDebtRepository.findByBill(bill);
         logger.warn(indebts.get(0).toString());
-        return indebts;
-    }
-
-    @GetMapping("/history_in_debt_bills")
-    public List<InDebt> getAllInDebtBills(@RequestHeader(value = "Authorization") String token){
-        User debtor = controllerHelper.getUserFromJWT(token.substring(7));
-        return inDebtRepository.findByDebtor(debtor);
-    }
-
-    @GetMapping("/bills_to_be_paid")
-    public List<InDebt> getBillsToBePaid(@RequestHeader(value = "Authorization") String token){
-        User debtor = controllerHelper.getUserFromJWT(token.substring(7));
-        return inDebtRepository.findByDebtorAndStatus(debtor,0);
+        return new ResponseEntity<>(indebts,HttpStatus.OK);
     }
 
     @GetMapping("/bills/{bid}")
@@ -167,9 +145,20 @@ public class BillController {
         return bills.get(0);
     }
 
-//    =========================确认欠款==============================
 
-    @PutMapping("/debt/{bid}")
+//    =========================Working Space==============================
+
+    @GetMapping("/unarchived_debts")
+    public List<ResponseDebtsByDebtor> getDebtsByDid(@RequestHeader(value = "Authorization") String token){
+        User debtor = controllerHelper.getUserFromJWT(token.substring(7));
+        return inDebtRepository.findResponseDebtsByDebtor(debtor);
+    }
+//    =====================================================================
+
+
+//    =========================Upgrade Status==============================
+
+    @PutMapping("/debts/{bid}")
     public ResponseEntity<?> UpgradeDebtStatus( @PathVariable Integer bid,
                                                 @RequestHeader(value = "Authorization") String token) {
         String debtorEmail = controllerHelper.getEmailFromJWT(token);

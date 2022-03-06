@@ -3,6 +3,7 @@ package com.yyds.billshare.Repository;
 import com.yyds.billshare.Model.Bill;
 import com.yyds.billshare.Model.InDebt;
 import com.yyds.billshare.Model.ResponseModel.ResponseDebtForOneBill;
+import com.yyds.billshare.Model.ResponseModel.ResponseDebtsByDebtor;
 import com.yyds.billshare.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,21 +17,16 @@ public interface InDebtRepository extends JpaRepository<InDebt, User> {
     List<InDebt> findByAmount(int amount);
     List<ResponseDebtForOneBill> findByBill(Bill bill);
 
-    List<InDebt> findByDebtor(User debtor);
-    List<InDebt> findByDebtorAndStatus(User debtor,Integer status);
-
     @Query("SELECT d FROM InDebt d WHERE d.debtor.email = ?1 AND d.bill.bid = ?2")
     Optional<InDebt> findByDebtorEmailAndBillId(String email, Integer bid);
 
-    @Query("SELECT d FROM InDebt d WHERE d.debtor.id = ?1 AND d.bill.bid = ?2")
+    @Query("SELECT d FROM InDebt d WHERE d.debtor.uid = ?1 AND d.bill.bid = ?2")
     Optional<InDebt> findByDebtorIdAndBillId(Integer did, Integer bid);
-
-    // 好像没用
-    @Query("SELECT bill FROM InDebt WHERE debtor =?1")
-    List<Bill> findHistoryBillsByDebtor(User debtor);
-
-    @Query("SELECT bill FROM InDebt WHERE debtor =?1 and status=?2")
-    List<Bill> findBillByDebtorAndStatus(User debtor, Integer status);
+//    @Query("SELECT d.debtor.uid, d.amount, d.bill.bid, d.status, d.bill.finishTime, d.bill.owner.nickname" +
+//            " FROM InDebt d WHERE d.debtor=?1 AND d.status<3 ORDER BY d.status")
+    @Query(value = "SELECT new com.yyds.billshare.Model.ResponseModel.ResponseDebtsByDebtor(d.debtor.uid, d.amount, d.bill.bid, d.status, d.bill.finishTime, d.bill.owner.nickname)"+
+            "FROM InDebt d WHERE d.debtor=?1 AND d.status<3 ORDER BY d.status")
+    List<ResponseDebtsByDebtor> findResponseDebtsByDebtor(User debtor);
 
 
 }
