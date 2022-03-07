@@ -3,6 +3,7 @@ import com.yyds.billshare.Exception.ExceptionEnum;
 import com.yyds.billshare.Exception.FormInfoException;
 import com.yyds.billshare.Model.Form.UserEditInfoForm;
 import com.yyds.billshare.Model.Form.UserSignupForm;
+import com.yyds.billshare.Model.ResponseModel.ResponseUserInfo;
 import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,13 @@ public class UserController {
     public UserController(UserRepository userJpaRepository, ControllerHelper controllerHelper) {
         this.userJpaRepository = userJpaRepository;
         this.controllerHelper = controllerHelper;
+    }
+
+    @GetMapping("/userInfo")
+    public ResponseUserInfo getUserInfo(@RequestHeader(value="Authorization") String jwtToken) {
+        User user = controllerHelper.getUserFromJWT(jwtToken);
+
+        return userJpaRepository.findByUserEmail(user.getEmail()).get(0);
     }
 
     @PostMapping("/create_user")
