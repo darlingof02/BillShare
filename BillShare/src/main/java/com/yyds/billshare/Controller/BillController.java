@@ -138,6 +138,8 @@ public class BillController {
         return new ResponseEntity<>(indebts,HttpStatus.OK);
     }
 
+
+    // TODO: 这个东西是干嘛的？
     @GetMapping("/bills/{bid}")
     public ResponseOneBill getOneBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token) {
         List<ResponseOneBill> bills = billRepository.findByBid(bid);
@@ -179,6 +181,7 @@ public class BillController {
 
     @PutMapping("/debts/{bid}")
     public ResponseEntity<?> UpgradeDebtStatus( @PathVariable Integer bid,
+                                                @RequestBody String status,
                                                 @RequestHeader(value = "Authorization") String token) {
         String debtorEmail = controllerHelper.getEmailFromJWT(token);
         Optional<InDebt> debt = inDebtRepository.findByDebtorEmailAndBillId(debtorEmail, bid);
@@ -187,9 +190,13 @@ public class BillController {
         * 这个人是不是拥有这个债，没有的话报错
         * 这个人有没有权限升级这个债
         * */
+
+        logger.warn("hello world  "+status);
         if(debt.isEmpty())
             return new ResponseEntity<String>("No such debt!",HttpStatus.NOT_FOUND);
         InDebt d = debt.get();
+//        if(d.getStatus()!=status)
+//            return new ResponseEntity<String>("please refresh",HttpStatus.ACCEPTED);
         switch (d.getStatus()){
             case 0:
                 d.setStatus(1);
@@ -205,7 +212,8 @@ public class BillController {
         return new ResponseEntity<String>("Debt status upgraded",HttpStatus.OK);
     }
 
-    @PutMapping("/bill/{bid}/{did}")
+    @Transactional
+    @PutMapping("/bills/{bid}/{did}")
     public ResponseEntity<?> UpgradeBillDebtStatus( @PathVariable Integer bid,
                                                     @PathVariable Integer did,
                                                     @RequestHeader(value = "Authorization") String token) {
@@ -223,6 +231,8 @@ public class BillController {
         InDebt d =debt.get();
         if(d.getStatus() != 2)
             return new ResponseEntity<String>("No permission",HttpStatus.FORBIDDEN);
+        d.setStatus(3);
+        inDebtRepository.save(d);
         return new ResponseEntity<String>("Debt status upgraded",HttpStatus.OK);
     }
 
