@@ -57,14 +57,13 @@ public class TestShit {
 //        entityManager.persist(b2);
 //        entityManager.persist(b3);
 
-        List<User> users = userRepository.findByEmail("xieyn12345@gmail.com");
-        List<Bill> bills = billRepository.findByAmount(10);
-        List<Bill> allbills = billRepository.findAll();
-
-        System.out.println("++++++++++");
-        System.out.println(users);
-        System.out.println(bills);
-        System.out.println(allbills);
+//        List<User> users = userRepository.findByEmail("xieyn12345@gmail.com");
+//        List<Bill> allbills = billRepository.findAll();
+//
+//        System.out.println("++++++++++");
+//        System.out.println(users);
+//        System.out.println(bills);
+//        System.out.println(allbills);
 
     }
 
