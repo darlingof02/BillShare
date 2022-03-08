@@ -145,6 +145,25 @@ public class BillController {
         return bills.get(0);
     }
 
+    @GetMapping("/debts/{bid}")
+    public ResponseEntity<?> getDebtorsByIndebt(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token) {
+        User debtor = controllerHelper.getUserFromJWT(token.substring(7));
+        Optional<InDebt> debts = inDebtRepository.findByDebtorIdAndBillId(debtor.getUid(), bid);
+        if (debts.isEmpty()) {
+            return new ResponseEntity<String>("No such debt!",HttpStatus.NOT_FOUND);
+        }
+
+        InDebt debt = debts.get();
+        if (debt.getDebtor().getUid() != debtor.getUid()) {
+            return new ResponseEntity<String>("No permission to get the bill's information",HttpStatus.FORBIDDEN);
+        }
+
+        Bill bill = billRepository.getById(bid);
+        List<ResponseDebtForOneBill> indebts = inDebtRepository.findByBill(bill);
+        logger.warn(indebts.get(0).toString());
+        return new ResponseEntity<>(indebts,HttpStatus.OK);
+    }
+
 
 //    =========================Working Space==============================
 
