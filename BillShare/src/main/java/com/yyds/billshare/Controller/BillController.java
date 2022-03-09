@@ -12,7 +12,6 @@ import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.BillRepository;
 import com.yyds.billshare.Repository.InDebtRepository;
 import com.yyds.billshare.Repository.UserRepository;
-import com.yyds.billshare.jwt.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,18 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
 
 // TODO: 所有的返回类型可以都改成ResponseEntity<原返回类型>，这样可以自定义response status或者header
 
@@ -124,6 +123,7 @@ public class BillController {
      * @param token (JWT Token of certain user)
      * @return A list of ResponseDebt
      */
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @GetMapping("/owned_bills/{bid}")
     public ResponseEntity<?> getDebtorsByBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token){
         User owner = controllerHelper.getUserFromJWT(token.substring(7));
@@ -139,7 +139,6 @@ public class BillController {
     }
 
 
-    // TODO: 这个东西是干嘛的？
     @GetMapping("/bills/{bid}")
     public ResponseOneBill getOneBill(@PathVariable Integer bid, @RequestHeader(value = "Authorization") String token) {
         List<ResponseOneBill> bills = billRepository.findByBid(bid);
@@ -167,14 +166,12 @@ public class BillController {
     }
 
 
-//    =========================Working Space==============================
 
     @GetMapping("/unarchived_debts")
     public List<ResponseDebtsByDebtor> getDebtsByDid(@RequestHeader(value = "Authorization") String token){
         User debtor = controllerHelper.getUserFromJWT(token.substring(7));
         return inDebtRepository.findResponseDebtsByDebtor(debtor);
     }
-//    =====================================================================
 
 
 //    =========================Upgrade Status==============================
@@ -237,7 +234,7 @@ public class BillController {
         return new ResponseEntity<String>("Debt status upgraded",HttpStatus.OK);
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @PutMapping("/bills/{bid}/{did}")
     public ResponseEntity<?> UpgradeBillDebtStatus( @PathVariable Integer bid,
                                                     @PathVariable Integer did,
@@ -258,7 +255,11 @@ public class BillController {
             return new ResponseEntity<String>("No permission",HttpStatus.FORBIDDEN);
         d.setStatus(3);
         inDebtRepository.save(d);
-        return new ResponseEntity<String>("Debt status upgraded",HttpStatus.OK);
+
+        Bill bill = billRepository.getById(bid);
+        List<ResponseDebtForOneBill> indebts = inDebtRepository.findByBill(bill);
+        logger.warn(indebts.get(0).toString());
+        return new ResponseEntity<>(indebts,HttpStatus.OK);
     }
 
 
