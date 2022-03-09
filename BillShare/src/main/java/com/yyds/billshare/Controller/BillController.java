@@ -179,6 +179,31 @@ public class BillController {
 
 //    =========================Upgrade Status==============================
 
+    /**
+     * used to refuse a new bill for a debtor
+     * @param bid the bid of the new bill
+     * @param status the status of the new indebt relation
+     * @param token the JWTToken for the debtor
+     * @return set the status of the indebt relation to '-1', which means the debtor refuses the new bill
+     */
+    @PutMapping("debts/decline/{bid}")
+    public ResponseEntity<?> DeclineDebt(@PathVariable Integer bid,
+                                         @RequestBody String status,
+                                         @RequestHeader(value = "Authorization") String token) {
+        User debtor = controllerHelper.getUserFromJWT(token);
+        Optional<InDebt> debt = inDebtRepository.findByDebtorIdAndBillId(debtor.getUid(), bid);
+
+        if (debt.isEmpty())
+            return new ResponseEntity<String>("No such debt!",HttpStatus.NOT_FOUND);
+        InDebt d = debt.get();
+
+        if (d.getStatus() != 0)
+            return new ResponseEntity<String>("The debt has been accepted!", HttpStatus.BAD_REQUEST);
+        d.setStatus(-1);
+        inDebtRepository.save(d);
+        return new ResponseEntity<String>("The debt has been declined!", HttpStatus.OK);
+    }
+
     @PutMapping("/debts/{bid}")
     public ResponseEntity<?> UpgradeDebtStatus( @PathVariable Integer bid,
                                                 @RequestBody String status,
