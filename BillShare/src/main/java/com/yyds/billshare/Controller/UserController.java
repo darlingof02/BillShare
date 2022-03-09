@@ -72,8 +72,28 @@ public class UserController {
 
     }
 
+    @PutMapping("/edit-profile")
+    public String editProfile (@RequestBody UserEditInfoForm form,
+                               BindingResult bindingResult,
+                               @RequestHeader(value = "Authorization") String jwtToken) throws IOException {
+
+        if(bindingResult.hasErrors()){
+            return bindingResult.getAllErrors().toString();
+        }
+        User user = controllerHelper.getUserFromJWT(jwtToken);
+        user.editInfo(form);
+        userJpaRepository.save(user);
+
+        return "Edit user profile successfully";
+    }
+
+
+
+
+
+
     @PostMapping("/edit_profile")
-    public String editProfile (@Valid UserEditInfoForm form,
+    public String editProfileAvatar (@Valid UserEditInfoForm form,
                                BindingResult bindingResult,
                                @RequestHeader(value = "Authorization") String jwtToken) throws IOException {
 
