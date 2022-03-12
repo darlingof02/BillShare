@@ -1,7 +1,8 @@
-# BillShare
-Share payment with roommates!
+# BillShare - Share payment with roommates!
 
 This app aims to help user manage bills and debts.
+
+it's developed with SpringBoot and JPA
 
 [Front-end application](https://github.com/darlingof02/billshare_frontend) is built in ReactJS
 
@@ -44,7 +45,7 @@ In realization, we use email as user’s ID.
 record information related to shared bills. Every bill has a record in Bill.
 
 * Bill entity has several basic fields to describe one bill. They are amount, type and comment.
-* Bill entity has 2 timestamp field: 
+* Bill entity has 2 timestamp fields: 
     * Create Time: the time when the bill was created.
     * Due Time: the time when debts should be settled.
 * It also has a status indicating whether it’s settled or not.
@@ -52,7 +53,7 @@ record information related to shared bills. Every bill has a record in Bill.
 ## InDebt
 It’s a relation which keeps track of debtors in each shared bill. Each debtor in each bill will correspond an indebt record.
 * This relation also has amount field indicating the amount of payment for the debtor
-* 2 timestamp field show 
+* 2 timestamp fields show 
     * when it’s accepted by the debtor
     * when it’s paid
 * The status is an important field in indebt relation, as it indicates the status of each indebt record
