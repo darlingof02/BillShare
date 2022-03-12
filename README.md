@@ -8,14 +8,18 @@ This app aims to help user manage bills and debts.
 # Goal Features & User Case
 ## Features completed
 User:
-1.	User login/logout 
-2.	User Authorization using JWT
-3.	Edit User profile
+*	User login/logout 
+*	User Authorization using JWT
+*	Edit User profile
 
 Bill:
-1.	Manage bills/indebts:
-    a.	Create bill
-    b.	Manage bills/indebts such as decline/accept/pay/confirm
+*	Manage bills/indebts:
+    * Create bill
+    * Manage bills/indebts 
+        * decline
+        * accept
+        * pay
+        * confirm
 
 ## Features in following iterations
 * settle indebts with multiple users
@@ -27,7 +31,6 @@ Bill:
 
 ## User Case Diagram
 ![4071644805775_ pic](https://user-images.githubusercontent.com/41298248/157998842-bdf5f066-d72d-4cee-9e1f-aed899bcc2f5.jpg)
-
 
 
 # Entities/Relations
@@ -69,9 +72,6 @@ UserController handles request related to users such as edit user profile and se
 
 ## JWTController
 JWTController deals with Authenticating and Authorizing users.
-
-
-# Completed features:
 
 
 
