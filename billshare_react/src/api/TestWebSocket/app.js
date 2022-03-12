@@ -19,7 +19,7 @@ function setConnected(connected) {
 }
 const token =  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJZVU5JTlgxQFVDSS5FRFUiLCJleHAiOjE2NDU3NDUwMTcsImlhdCI6MTY0NTE0MDIxN30.T95E3hsi0EVfqHl9OgyGhE4NSRv-27fgYrgP9JdKO7e8XLL4u3sCQ9y8LE87GsLks2mug1rso50zVyIe6aNUag"
 function connect() {
-    var socket = new SockJS(`http://${IP}:8080/gs-guide-websocket`,
+    var socket = new SockJS(`http://${IP}:8080/gs-guide-websocket-2`,
     null,
    {
        transports: ['xhr-streaming'], 

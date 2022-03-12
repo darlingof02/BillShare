@@ -112,7 +112,4 @@ export default function Layout( {children} ){
         </ThemeProvider>
 
     )
-
-
-
 }
