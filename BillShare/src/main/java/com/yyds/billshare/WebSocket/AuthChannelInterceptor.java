@@ -38,7 +38,6 @@ public class AuthChannelInterceptor implements ChannelInterceptor {
         logger.info("inboundChannel message:" + message.toString());
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message,StompHeaderAccessor.class);
         if(StompCommand.CONNECT.equals(accessor.getCommand())){
-
             String token = getJwtFromMessage(message);
             if(token == null)
                 throw new RuntimeException();
