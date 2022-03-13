@@ -11,7 +11,7 @@ import com.yyds.billshare.Model.ResponseModel.ResponseOwnedBill;
 import com.yyds.billshare.Model.User;
 import com.yyds.billshare.Repository.BillRepository;
 import com.yyds.billshare.Repository.InDebtRepository;
-import com.yyds.billshare.Repository.UserRepository;
+import com.yyds.billshare.WebSocket.WebSocketService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,12 +45,18 @@ public class BillController {
     @Value("${path.receipt}")
     private String receiptSavePath;
 
+    private final BillRepository billRepository;
+    private final InDebtRepository inDebtRepository;
+    private final ControllerHelper controllerHelper;
+    private final WebSocketService websocketService;
+
     @Autowired
-    private BillRepository billRepository;
-    @Autowired
-    private InDebtRepository inDebtRepository;
-    @Autowired
-    private ControllerHelper controllerHelper;
+    public BillController(BillRepository billRepository, InDebtRepository inDebtRepository, ControllerHelper controllerHelper, WebSocketService websocketService) {
+        this.billRepository = billRepository;
+        this.inDebtRepository = inDebtRepository;
+        this.controllerHelper = controllerHelper;
+        this.websocketService = websocketService;
+    }
 
     // 弃用
     @PostMapping("/createbill")
@@ -100,6 +106,7 @@ public class BillController {
             logger.warn(debtorInfo.getAmount().toString());
             InDebt inDebt = new InDebt(d,bill,0,null,null,debtorInfo.getAmount());
             inDebtRepository.save(inDebt);
+//            websocketService.sendDebtToUser(debtorInfo.getDebtorEmail(), inDebt);
         }
         return new ResponseEntity<String>("Create bill successfully!",HttpStatus.CREATED);
     }
