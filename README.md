@@ -22,7 +22,7 @@ Bill:
         * pay
         * confirm
 
-## Features in following iterations
+<!-- ## Features in following iterations -->
 * settle indebts with multiple users
 * social media part, creating groups and chatrooms
 * create group shared bill
