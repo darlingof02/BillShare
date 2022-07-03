@@ -24,6 +24,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/gs-guide-websocket")
                 .setAllowedOrigins("http://localhost:3000/")
                 .withSockJS();
+        registry.addEndpoint("/gs-guide-websocket-2")
+                .setAllowedOrigins("http://localhost:3001/")
+                .withSockJS();
     }
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {

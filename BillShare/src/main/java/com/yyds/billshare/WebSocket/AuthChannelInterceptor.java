@@ -35,8 +35,12 @@ public class AuthChannelInterceptor implements ChannelInterceptor {
     }
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        logger.info("inboundChannel message:" + message.toString());
+        logger.info("inboundChannel message:\n" + message.toString());
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message,StompHeaderAccessor.class);
+
+//        logger.warn(message.getHeaders().get("nativeHeaders", LinkedMultiValueMap.class).get("login").get(0).toString());
+//        logger.warn(message.getHeaders().get("nativeHeaders", LinkedMultiValueMap.class).get("passcode").get(0).getClass().toString());
+
         if(StompCommand.CONNECT.equals(accessor.getCommand())){
             String token = getJwtFromMessage(message);
             if(token == null)

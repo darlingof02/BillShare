@@ -24,6 +24,8 @@ public interface InDebtRepository extends JpaRepository<InDebt, User> {
     Optional<InDebt> findByDebtorIdAndBillId(Integer did, Integer bid);
 //    @Query("SELECT d.debtor.uid, d.amount, d.bill.bid, d.status, d.bill.finishTime, d.bill.owner.nickname" +
 //            " FROM InDebt d WHERE d.debtor=?1 AND d.status<3 ORDER BY d.status")
+
+    //
     @Query(value = "SELECT new com.yyds.billshare.Model.ResponseModel.ResponseDebtsByDebtor(d.debtor.uid, d.amount, d.bill.bid, d.status, d.bill.finishTime, d.bill.owner.nickname)"+
             "FROM InDebt d WHERE d.debtor=?1 AND d.status<3 ORDER BY d.status")
     List<ResponseDebtsByDebtor> findResponseDebtsByDebtor(User debtor);
