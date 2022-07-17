@@ -18,7 +18,7 @@ import java.security.Principal;
 
 @Slf4j
 @Controller
-@CrossOrigin(origins = {"http://localhost:3000/","http://localhost:3001/"}, allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:3000/","http://localhost:3001/","http://localhost:3002/"}, allowCredentials = "true", allowedHeaders = "*")
 public class GreetingController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired

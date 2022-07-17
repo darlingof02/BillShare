@@ -46,8 +46,10 @@ public class AuthChannelInterceptor implements ChannelInterceptor {
             if(token == null)
                 throw new RuntimeException();
             String userEmail = controllerHelper.getEmailFromJWT(token);
+//            logger.info(accessor.toString());
             accessor.setUser(new UserPrincipal(userEmail));
             logger.info("Connect user:"+userEmail);
+//            logger.info(accessor.toString());
         }
         return message;
     }

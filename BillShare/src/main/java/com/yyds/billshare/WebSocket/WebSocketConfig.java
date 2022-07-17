@@ -22,11 +22,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/gs-guide-websocket")
-                .setAllowedOrigins("http://localhost:3000/")
+                .setAllowedOrigins("http://localhost:3000/","http://localhost:3001/","http://localhost:3002/")
                 .withSockJS();
-        registry.addEndpoint("/gs-guide-websocket-2")
-                .setAllowedOrigins("http://localhost:3001/")
-                .withSockJS();
+//        registry.addEndpoint("/gs-guide-websocket")
+//                .setAllowedOrigins("http://localhost:3001/")
+//                .withSockJS();
     }
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {

@@ -1,7 +1,9 @@
 package com.yyds.billshare.Controller;
 
+import com.yyds.billshare.OnlineDetect.OnlineDetectService;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ class BillCreateForm{
 
 @Slf4j
 @Controller
-@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:3000/","http://localhost:3001/","http://localhost:3002/"}, allowCredentials = "true", allowedHeaders = "*")
 public class TestAnythingController {
 
     @GetMapping("/test/string")
@@ -99,6 +101,22 @@ public class TestAnythingController {
             log.info("wocaonima");
 
         return "shit";
+    }
+
+    @Autowired
+    private OnlineDetectService onlineDetectService;
+
+    @GetMapping("/test/online/set")
+    @ResponseBody
+    public String testSetRedis(){
+        System.out.println("hello");
+        onlineDetectService.setUser("test@test.com", "121");
+        return "Set";
+    }
+    @GetMapping("/test/online/get")
+    @ResponseBody
+    public String testGetRedis(){
+        return onlineDetectService.getUser("test@test.com");
     }
 
 }

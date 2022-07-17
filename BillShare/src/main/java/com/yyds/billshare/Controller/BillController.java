@@ -37,7 +37,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:3000/","http://localhost:3001/","http://localhost:3002/"}, allowCredentials = "true", allowedHeaders = "*")
 public class BillController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
