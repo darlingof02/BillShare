@@ -30,6 +30,7 @@ function connect() {
    });
 
     stompClient = Stomp.over(socket);
+    stompClient.heartbeat.incoming = 10000;
     stompClient.connect({"Authorization":token}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);

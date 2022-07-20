@@ -110,13 +110,16 @@ public class TestAnythingController {
     @ResponseBody
     public String testSetRedis(){
         System.out.println("hello");
-        onlineDetectService.setUser("test@test.com", "121");
+        onlineDetectService.setUserOnline("test@test.com", "121");
         return "Set";
     }
     @GetMapping("/test/online/get")
     @ResponseBody
     public String testGetRedis(){
-        return onlineDetectService.getUser("test@test.com");
+//        return "shit";
+        if(onlineDetectService.isOnline("test3@test.com"))
+            return "Online";
+        return "Offline";
     }
 
 }

@@ -74,8 +74,8 @@ jwt:
         seconds: 604800
 server:
   port: 8080
-#  address: 192.168.0.125
-  address: 192.168.86.166
+  address: 192.168.0.125
+#  address: 192.168.86.166
 
 
 
