@@ -19,7 +19,7 @@ public class WebSocketService {
     }
 
     public void sendDebtToUser(final String user ,final String debtInfo){
-        messagingTemplate.convertAndSendToUser(user,"/topics/debts",debtInfo);
+        messagingTemplate.convertAndSendToUser(user,"/topic/news",debtInfo);
     }
 
 

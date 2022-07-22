@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class OnlineDetectService {
 
+    private final int EXPIRE_TIMEOUT = 60;
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
@@ -17,7 +19,7 @@ public class OnlineDetectService {
         boolean result = false;
         try{
             redisTemplate.opsForValue().set(userEmail, sessionId);
-            redisTemplate.expire(userEmail,20, TimeUnit.SECONDS);
+            redisTemplate.expire(userEmail, EXPIRE_TIMEOUT, TimeUnit.SECONDS);
             result = true;
         } catch (Exception e){
             e.printStackTrace();

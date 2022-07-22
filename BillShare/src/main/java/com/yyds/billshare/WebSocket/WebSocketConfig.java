@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    final private int HEART_BEAT = 10_000;
+    final private int HEART_BEAT = 20_000;
 
     @Bean
     public AuthChannelInterceptor authChannelInterceptor(){

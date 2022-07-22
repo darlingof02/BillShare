@@ -9,6 +9,7 @@ import com.yyds.billshare.Model.ResponseModel.ResponseDebtsByDebtor;
 import com.yyds.billshare.Model.ResponseModel.ResponseOneBill;
 import com.yyds.billshare.Model.ResponseModel.ResponseOwnedBill;
 import com.yyds.billshare.Model.User;
+import com.yyds.billshare.OnlineDetect.OnlineDetectService;
 import com.yyds.billshare.Repository.BillRepository;
 import com.yyds.billshare.Repository.InDebtRepository;
 import com.yyds.billshare.WebSocket.WebSocketService;
@@ -33,7 +34,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-// TODO: 所有的返回类型可以都改成ResponseEntity<原返回类型>，这样可以自定义response status或者header
+// TODO: update status以后 发信息
 
 @Slf4j
 @RestController
@@ -49,13 +50,15 @@ public class BillController {
     private final InDebtRepository inDebtRepository;
     private final ControllerHelper controllerHelper;
     private final WebSocketService websocketService;
+    private final OnlineDetectService onlineDetectService;
 
     @Autowired
-    public BillController(BillRepository billRepository, InDebtRepository inDebtRepository, ControllerHelper controllerHelper, WebSocketService websocketService) {
+    public BillController(BillRepository billRepository, InDebtRepository inDebtRepository, ControllerHelper controllerHelper, WebSocketService websocketService, OnlineDetectService onlineDetectService) {
         this.billRepository = billRepository;
         this.inDebtRepository = inDebtRepository;
         this.controllerHelper = controllerHelper;
         this.websocketService = websocketService;
+        this.onlineDetectService = onlineDetectService;
     }
 
     // 弃用
@@ -102,11 +105,13 @@ public class BillController {
         billRepository.save(bill);
         //save debtors
         for(DebtorInfo debtorInfo: billCreateForm.getDebtorInfos()){
+
             User d = controllerHelper.getUserByEmail(debtorInfo.getDebtorEmail());
             logger.warn(debtorInfo.getAmount().toString());
             InDebt inDebt = new InDebt(d,bill,0,null,null,debtorInfo.getAmount());
             inDebtRepository.save(inDebt);
-//            websocketService.sendDebtToUser(debtorInfo.getDebtorEmail(), inDebt);
+            // send ws message if user is online
+            sendUpdateInfo(debtorInfo.getDebtorEmail(), debtorInfo.toString());
         }
         return new ResponseEntity<String>("Create bill successfully!",HttpStatus.CREATED);
     }
@@ -238,9 +243,12 @@ public class BillController {
                 return new ResponseEntity<String>("No permission to upgrade debt status",HttpStatus.FORBIDDEN);
         }
         inDebtRepository.save(d);
+        sendUpdateInfo(debtorEmail, d.toString());
         return new ResponseEntity<String>("Debt status upgraded",HttpStatus.OK);
     }
 
+
+    //
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @PutMapping("/bills/{bid}/{did}")
     public ResponseEntity<?> UpgradeBillDebtStatus( @PathVariable Integer bid,
@@ -266,10 +274,14 @@ public class BillController {
         Bill bill = billRepository.getById(bid);
         List<ResponseDebtForOneBill> indebts = inDebtRepository.findByBill(bill);
         logger.warn(indebts.get(0).toString());
+
         return new ResponseEntity<>(indebts,HttpStatus.OK);
     }
 
-
+    private void sendUpdateInfo(String userEmail, String message){
+        if(onlineDetectService.isOnline(userEmail))
+            websocketService.sendDebtToUser(userEmail, message);
+    }
 
     private void saveReceipt(MultipartFile receipt) throws IOException {
         String avatarPath = receipt.getOriginalFilename();

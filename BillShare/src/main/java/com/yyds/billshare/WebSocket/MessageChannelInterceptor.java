@@ -24,12 +24,11 @@ public class MessageChannelInterceptor  implements ChannelInterceptor {
 
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message,StompHeaderAccessor.class);
         StompCommand command = accessor.getCommand();
-        logger.info("message interceptor:\n" + message);
+//        logger.info("message interceptor:\n" + message);
         if(StompCommand.CONNECT.equals(command) || StompCommand.DISCONNECT.equals(command))
             return message;
         if(accessor.getUser()!=null){
             onlineDetectService.setUserOnline(accessor.getUser().getName(), accessor.getSessionId());
-            logger.info(accessor.getUser().getName());
             logger.info("renew user:", accessor.getUser().getName());
         }
 
