@@ -4,7 +4,9 @@ import jQuery from "jquery";
 
 
 var stompClient = null;
-const IP = '192.168.86.74'
+// const IP = '192.168.0.125'
+const IP = '192.168.86.166'
+// const IP = 'localhost'
 
 function setConnected(connected) {
     jQuery("#connect").prop("disabled", connected);
@@ -17,16 +19,18 @@ function setConnected(connected) {
     }
     jQuery("#greetings").html("");
 }
-const token =  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJZVU5JTlgxQFVDSS5FRFUiLCJleHAiOjE2NDU3NDUwMTcsImlhdCI6MTY0NTE0MDIxN30.T95E3hsi0EVfqHl9OgyGhE4NSRv-27fgYrgP9JdKO7e8XLL4u3sCQ9y8LE87GsLks2mug1rso50zVyIe6aNUag"
+// const token =  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkB0ZXN0LmNvbSIsImV4cCI6MTY1ODYxODAwMywiaWF0IjoxNjU4MDEzMjAzfQ.cKY9MXJTpw9OOzSvVDEynrLw9VSAUohhrCxrYE1Wn5aJjqlIk1nzt1IzhWIJleTFN5-2WeabHmVic3z4WP9GhQ"
+const token =  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNjU4NDQ0NjYzLCJpYXQiOjE2NTc4Mzk4NjN9.CCduvnBjvq9vXkbifwYC-bgB1XYtoW7GIdtvzp_ZSfyfgwImB-V6_6ymGVFHdO6NHjaqocW6E1Bsrh5iYOwCjw"
 function connect() {
     var socket = new SockJS(`http://${IP}:8080/gs-guide-websocket`,
     null,
    {
        transports: ['xhr-streaming'], 
-    //    headers: {'Authorization': token }
+       headers: {'Authorization': token }
    });
 
     stompClient = Stomp.over(socket);
+    stompClient.heartbeat.incoming = 10000;
     stompClient.connect({"Authorization":token}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);

@@ -24,8 +24,6 @@ public class UserHandshakeHandler extends DefaultHandshakeHandler {
         String randomId = UUID.randomUUID().toString();
         logger.info("User with id '{}' opened the page", randomId);
 //        logger.info("User with id '{}' opened the page");
-
         return new UserPrincipal(randomId);
-
     }
 }

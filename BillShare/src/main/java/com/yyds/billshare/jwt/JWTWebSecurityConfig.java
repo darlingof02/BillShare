@@ -82,9 +82,12 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/create_user")
                 .antMatchers(HttpMethod.GET,"/test/**")
                 .antMatchers(HttpMethod.GET,"/gs-guide-websocket/**")
+                .antMatchers(HttpMethod.GET,"/gs-guide-websocket-2/**")
                 .antMatchers(HttpMethod.GET,"/favicon.ico")
                 .antMatchers(HttpMethod.POST,"/test/**")
                 .antMatchers(HttpMethod.POST,"/gs-guide-websocket/**")
+                .antMatchers(HttpMethod.POST,"/gs-guide-websocket-2/**")
+
                 .antMatchers(HttpMethod.OPTIONS, "/**")
                 .and()
                 .ignoring()
