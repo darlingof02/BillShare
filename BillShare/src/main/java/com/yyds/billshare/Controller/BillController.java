@@ -38,7 +38,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000/","http://localhost:3001/","http://localhost:3002/"}, allowCredentials = "true", allowedHeaders = "*")
+//@CrossOrigin(origins = {"http://localhost:3000/","http://localhost:3001/","http://localhost:3002/"}, allowCredentials = "true", allowedHeaders = "*")
 public class BillController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -113,6 +113,7 @@ public class BillController {
             // send ws message if user is online
             sendUpdateInfo(debtorInfo.getDebtorEmail(), debtorInfo.toString());
         }
+        sendUpdateInfo(controllerHelper.getEmailFromJWT(token), "success");
         return new ResponseEntity<String>("Create bill successfully!",HttpStatus.CREATED);
     }
 
@@ -279,6 +280,7 @@ public class BillController {
     }
 
     private void sendUpdateInfo(String userEmail, String message){
+
         if(onlineDetectService.isOnline(userEmail))
             websocketService.sendDebtToUser(userEmail, message);
     }
