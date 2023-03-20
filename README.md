@@ -6,6 +6,9 @@ it's developed with SpringBoot and JPA
 
 [Front-end application](https://github.com/darlingof02/billshare_frontend) is built in ReactJS
 
+See the demo [here](https://www.youtube.com/watch?v=D1gZhuITnMw)
+
+
 # Goal Features & User Case
 ## Features completed
 User:
